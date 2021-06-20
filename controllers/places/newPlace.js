@@ -1,3 +1,3 @@
-async function newPlaceCallback() {}
+function newPlace() {}
 
-module.exports = newPlaceCallback;
+module.exports = newPlace;

@@ -1,5 +1,3 @@
-const express = require('express');
-const date = require('date-fns');
-const newPlaceCallback = require('./newPlace');
+const newPlace = require('./newPlace');
 
-module.exports = { newPlaceCallback };
+module.exports = { newPlace };
