@@ -1,39 +1,40 @@
 {
-  "name": "proyecto",
-  "version": "1.0.0",
-  "description": "-Se trata de una web dónde todos los usuarios registrados podrán compartir sus experiencias por medio de fotos, valoraciones y comentarios sobre la peregrinación del camino de santiago.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rsCamino/proyecto-hack-a-boss.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rsCamino/proyecto-hack-a-boss/issues"
-  },
-  "homepage": "https://github.com/rsCamino/proyecto-hack-a-boss#readme",
-  "dependencies": {
-    "@sendgrid/mail": "^7.4.5",
-    "date-fns": "^2.22.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-fileupload": "^1.2.1",
-    "joi": "^17.4.0",
-    "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5",
-    "sharp": "^0.28.3",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "eslint": "^7.29.0",
-    "faker": "^5.5.3",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.3.1"
-  }
+	"name": "proyecto",
+	"version": "1.0.0",
+	"description": "-Se trata de una web dónde todos los usuarios registrados podrán compartir sus experiencias por medio de fotos, valoraciones y comentarios sobre la peregrinación del camino de santiago.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rsCamino/proyecto-hack-a-boss.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/rsCamino/proyecto-hack-a-boss/issues"
+	},
+	"homepage": "https://github.com/rsCamino/proyecto-hack-a-boss#readme",
+	"dependencies": {
+		"@sendgrid/mail": "^7.4.5",
+		"date-fns": "^2.22.1",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"express-fileupload": "^1.2.1",
+		"joi": "^17.4.0",
+		"jsonwebtoken": "^8.5.1",
+		"mysql2": "^2.2.5",
+		"sharp": "^0.28.3",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"eslint": "^7.29.0",
+		"faker": "^5.5.3",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.7",
+		"prettier": "^2.3.1"
+	}
 }
