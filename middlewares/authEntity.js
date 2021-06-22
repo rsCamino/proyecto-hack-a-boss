@@ -1,4 +1,4 @@
-const getDB = require('../bbdd/db');
+const getDB = require('../ddbb/db');
 const jwt = require('jsonwebtoken');
 
 const authUser = async (req, res, next) => {
@@ -23,8 +23,7 @@ const authUser = async (req, res, next) => {
 			throw error;
 		}
 
-		req.userAuth = tokenInfo;
-
+		req.entityAuth = tokenInfo;
 		next();
 	} catch (error) {
 		next(error);

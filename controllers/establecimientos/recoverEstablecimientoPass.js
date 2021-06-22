@@ -1,36 +1,34 @@
-const getDB = require('../../bbdd/db');
+const getDB = require('../../ddbb/db');
 const { generateRandomString, sendMail } = require('../../helpers');
 
 const recoverEstablecimientoPass = async (req, res, next) => {
-    let connection;
+	let connection;
 
-    try {
-        connection = await getDB();
+	try {
+		connection = await getDB();
 
-        const { email } = req.body;
+		const { email } = req.body;
 
-        console.log('HOLA');
+		if (!email) {
+			const error = new Error('Faltan campos');
+			error.httpStatus = 400;
+			throw error;
+		}
 
-        if (!email) {
-            const error = new Error('Faltan campos');
-            error.httpStatus = 400;
-            throw error;
-        }
+		const [establecimiento] = await connection.query(
+			`SELECT id FROM establecimientos WHERE email = ?;`,
+			[email]
+		);
 
-        const [establecimiento] = await connection.query(
-            `SELECT id FROM establecimientos WHERE email = ?;`,
-            [email]
-        );
+		if (establecimiento.length < 1) {
+			const error = new Error(`No existe ningún usuario con ese email`);
+			error.httpStatus = 404;
+			throw error;
+		}
 
-        if (establecimiento.length < 1) {
-            const error = new Error(`No existe ningún usuario con ese email`);
-            error.httpStatus = 404;
-            throw error;
-        }
+		const recoverCode = generateRandomString(20);
 
-        const recoverCode = generateRandomString(20);
-
-        const emailBody = `
+		const emailBody = `
             Se solicitó un cambio de contraseña para el establecimiento registrado con este email en la app Ruta do Camiño.
 
             El código de recuperación es: ${recoverCode}
@@ -40,27 +38,26 @@ const recoverEstablecimientoPass = async (req, res, next) => {
             ¡Gracias!
         `;
 
-        await sendMail({
-            to: email,
-            subject: 'Cambio de contraseña en Ruta do Camiño',
-            body: emailBody,
-        });
+		await sendMail({
+			to: email,
+			subject: 'Cambio de contraseña en Ruta do Camiño',
+			body: emailBody,
+		});
 
-        await connection.query(
-            `UPDATE establecimientos SET recoverCode = ? WHERE email = ?;`,
-            [recoverCode, email]
-        );
+		await connection.query(
+			`UPDATE establecimientos SET codigoRecuperacion = ? WHERE email = ?;`,
+			[recoverCode, email]
+		);
 
-        res.send({
-            status: 'ok',
-            message: 'Email enviado',
-        });
-    } catch (error) {
-        next(error);
-    } finally {
-        if (connection) connection.release();
-    }
+		res.send({
+			status: 'ok',
+			message: 'Email enviado',
+		});
+	} catch (error) {
+		next(error);
+	} finally {
+		if (connection) connection.release();
+	}
 };
 
 module.exports = recoverEstablecimientoPass;
-
