@@ -18,11 +18,11 @@
 -   GET - [/establecimientos/:idEstablecimiento/photos/:idPhoto] - Retorna la foto y los comentarios asociados a la foto.
 -   DELETE - [/establecimientos/idEstablecimiento/photos/:idPhoto] - Elimina una foto.
 -   GET - [/establecimientos/:idEstablecimiento] - Retorna informacion de un lugar concreto. ✅
--   PUT - [/establecimientos/:idEstablecimiento] - Edita (nombre, contacto (numero, email, pagina web), localización y/o foto de perfil) de un lugar.
--   PUT - [/establecimientos/:idEstablecimiento/password] - Edita la contraseña de un lugar.
--   PUT - [/establecimientos/password/recover] - Envia un correo con el codigo de recuperación de contraseña a un email.
--   PUT - [/establecimientos/password/reset] - Cambia la contraseña de un lugar.
--   DELETE - [/establecimientos/:idEstablecimiento] - Dar de baja a un lugar.
+-   PUT - [/establecimientos/:idEstablecimiento] - Edita (nombre, contacto (numero, email, pagina web), localización y/o foto de perfil) de un lugar. 🆘
+-   PUT - [/establecimientos/:idEstablecimiento/password] - Edita la contraseña de un lugar.✅
+-   PUT - [/establecimientos/password/recover] - Envia un correo con el codigo de recuperación de contraseña a un email.✅
+-   PUT - [/establecimientos/password/reset] - Cambia la contraseña de un lugar. ✅
+-   DELETE - [/establecimientos/:idEstablecimiento] - Dar de baja a un lugar. ✅
 
 ## Endpoints del usuario.
 

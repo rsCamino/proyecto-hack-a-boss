@@ -23,8 +23,9 @@ const main = async () => {
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(70) NOT NULL,
                 fotoperfil VARCHAR(50), 
-                email VARCHAR(50),
+                email VARCHAR(50) UNIQUE,
                 fechaCreacion DATETIME NOT NULL,
+                modificadoEn DATETIME NULL,
                 contraseña VARCHAR(512) NOT NULL,
                 activo BOOLEAN DEFAULT false,
                 deleted BOOLEAN DEFAULT false,
@@ -39,14 +40,15 @@ const main = async () => {
             CREATE TABLE establecimientos(
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(70),
-                email VARCHAR(50),
+                email VARCHAR(50) UNIQUE,
                 contraseña VARCHAR(512) NOT NULL,
                 fechaCreacion DATETIME NOT NULL,
+                modificadoEn DATETIME NULL,
                 deleted BOOLEAN DEFAULT false,
                 activo BOOLEAN DEFAULT false,
                 descripcion TEXT,
                 direccion VARCHAR(100) NOT NULL,
-                imagen varchar(50),
+                avatar varchar(50),
                 codigoRegistro VARCHAR(100),
                 codigoRecuperacion VARCHAR(100)
         );

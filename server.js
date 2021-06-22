@@ -11,6 +11,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 const establecimientoExist = require('./middlewares/establecimientoExist');
+const authEntity = require('./middlewares/authEntity');
 
 //* Controladores de establecimientos.
 const {
@@ -18,12 +19,18 @@ const {
 	newEstablecimiento,
 	validateEstablecimiento,
 	loginEstablecimiento,
+	editEstablecimiento,
+	editEstablecimientoPass,
+	recoverEstablecimientoPass,
+	resetEstablecimientoPass,
+	deleteEstablecimiento,
 } = require('./controllers/establecimientos');
 
 //* Obtener un establecimiento.
 app.get(
 	'/establecimientos/:idEstablecimiento',
 	establecimientoExist,
+	authEntity,
 	getEstablecimiento
 );
 
@@ -38,6 +45,36 @@ app.get(
 
 //* Loguearse como establecimiento.
 app.post('/establecimientos/login', loginEstablecimiento);
+
+//* Editar un establecimiento.
+app.put(
+	'/establecimientos/:idEstablecimiento',
+	establecimientoExist,
+	authEntity,
+	editEstablecimiento
+);
+
+//* Editar la contraseña de un establecimiento.
+app.put(
+	'/establecimientos/:idEstablecimiento/password',
+	establecimientoExist,
+	authEntity,
+	editEstablecimientoPass
+);
+
+//* Recuperar la contraseña de un establecimiento.
+app.put('/establecimientos/password/recover', recoverEstablecimientoPass);
+
+//* Resetear la contraseña de un establecimiento.
+app.put('/establecimientos/password/reset', resetEstablecimientoPass);
+
+//* Eliminar un establecimiento.
+app.delete(
+	'/establecimientos/:idEstablecimiento',
+	establecimientoExist,
+	authEntity,
+	deleteEstablecimiento
+);
 
 //! Middleware de error.
 
