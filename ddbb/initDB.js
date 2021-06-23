@@ -22,6 +22,7 @@ const main = async () => {
         CREATE TABLE usuarios(
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(70) NOT NULL,
+                nickname VARCHAR(70) NOT NULL UNIQUE,
                 fotoperfil VARCHAR(50), 
                 email VARCHAR(50) UNIQUE,
                 fechaCreacion DATETIME NOT NULL,
@@ -61,8 +62,8 @@ const main = async () => {
                 descripcion TEXT,
                 imagen VARCHAR(50),
                 likes int unsigned,
-                idEstablecimiento INT NOT NULL,
-                idUsuarios INT NOT NULL,
+                idEstablecimiento INT,
+                idUsuarios INT,
                 deleted BOOLEAN DEFAULT false 
                 
             );
@@ -80,26 +81,29 @@ const main = async () => {
                 
             );
             `);
+
 		console.log('tabla4');
+
 		await connection.query(`
-            CREATE TABLE usuarios_imagenes(
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                likes BOOLEAN,
-                comentario TEXT,
-                idUsuarios INT NOT NULL,
-                idImagenes INT NOT NULL,
-                deleted BOOLEAN DEFAULT false 
-                
+        CREATE TABLE usuarios_imagenes(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            likes BOOLEAN,
+            comentario TEXT,
+            idUsuarios INT NOT NULL,
+            idImagenes INT NOT NULL,
+            deleted BOOLEAN DEFAULT false 
             );
             `);
+
 		console.log('tabla5');
 		console.log('tablas creadas');
 
 		await connection.query(`
-        INSERT INTO usuarios (email, contraseña, nombre, fechaCreacion, activo, role)
-        VALUES ("kndy_1987@hotmail.com", 
+        INSERT INTO usuarios (email, contraseña, nombre, nickname, fechaCreacion, activo, role)
+        VALUES ("kndy_1987@hotmail.com",
         SHA2("${process.env.ADMIN_PASSWORD}", 512), 
-        "Candido Pazos", 
+        "Candido Pazos",
+        "kandy1987", 
         "${formatDate(new Date())}", 
         true, 
         "admin");
@@ -111,15 +115,17 @@ const main = async () => {
 			const email = faker.internet.email();
 			const contraseña = faker.internet.password();
 			const nombre = faker.name.findName();
+			const nickname = faker.datatype.uuid();
 			const fechaCreacion = now;
 			await connection.query(`
             INSERT INTO usuarios(
-                 email, contraseña, nombre, fechaCreacion, activo
+                 email, contraseña, nombre, nickname, fechaCreacion, activo
             )
             VALUES (
                 "${email}", 
                 SHA2("${contraseña}", 512), 
-                "${nombre}", 
+                "${nombre}",
+                "${nickname}", 
                 "${fechaCreacion}", 
                 true
             );`);
