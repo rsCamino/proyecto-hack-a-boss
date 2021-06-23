@@ -26,6 +26,14 @@ const {
 	deleteEstablecimiento,
 } = require('./controllers/establecimientos');
 
+//* Controladores Usuarios.
+const { 
+	newUsuario, 
+	validateUsuario, 
+	getUsuario, 
+	loginUsuario }
+	 = require('./controllers/users');
+
 //* Obtener un establecimiento.
 app.get(
 	'/establecimientos/:idEstablecimiento',
@@ -75,6 +83,26 @@ app.delete(
 	authEntity,
 	deleteEstablecimiento
 );
+
+//* Crear Usuario.
+
+app.post('/usuarios',newUsuario);
+
+
+//* Validar Usuario.
+
+app.get(
+	'/usuarios/validate/:registrationCode',
+	validateUsuario
+);
+
+//* Obtener un Usuario.
+
+app.get('/usuarios/:idUsuarios', getUsuario);
+
+//*Loguearse como usuario.
+
+app.post('/usuarios/login', loginUsuario);
 
 //! Middleware de error.
 
