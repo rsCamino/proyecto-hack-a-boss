@@ -7,22 +7,22 @@ const newUsuario = async (req, res, next) => {
 	try {
 		connection = await getDB();
 
-		const { name, email, password } = req.body;
+		const { name, email, password, nickname } = req.body;
 
-		if (!email || !password || !name) {
+		if (!email || !password || !name || !nickname) {
 			const error = new Error('Faltan campos');
 			error.httpStatus = 400;
 			throw error;
 		}
 
 		const [usuario] = await connection.query(
-			`SELECT id FROM usuarios WHERE email = ?;`,
-			[email]
+			`SELECT id FROM usuarios WHERE email = ? OR nickname = ?;`,
+			[email, nickname]
 		);
 
-		if (establecimiento.length > 0) {
+		if (usuario.length > 0) {
 			const error = new Error(
-				'Ya existe un establecimiento con ese email en la base de datos'
+				'Ya existe un usuario con ese email o nombre de usuario en la base de datos'
 			);
 			error.httpStatus = 409;
 			throw error;
@@ -32,32 +32,31 @@ const newUsuario = async (req, res, next) => {
 
 		const emailBody = `
             Te acabas de registrar en Ruta do Camiño.
-            Pulsa en este link para verificar tu cuenta: ${process.env.PUBLIC_HOST}/establecimientos/validate/${registrationCode}
+            Pulsa en este link para verificar tu cuenta: ${process.env.PUBLIC_HOST}/usuarios/validate/${registrationCode}
         `;
 
 		// Enviamos el mensaje.
 		await sendMail({
 			to: email,
-			subject: 'Activa tu establecimiento en Ruta do Camiño',
+			subject: 'Activa tu usuario en Ruta do Camiño',
 			body: emailBody,
 		});
 
 		await connection.query(
-			`INSERT INTO establecimientos (nombre, email, contraseña, codigoRegistro, fechaCreacion, direccion) VALUES (?, ?, SHA2(?, 512), ?, ?, ?);`,
+			`INSERT INTO usuarios (nombre, nickname, email, contraseña, codigoRegistro, fechaCreacion) VALUES (?, ?, ?, SHA2(?, 512), ?, ?);`,
 			[
 				name,
+				nickname,
 				email,
 				password,
 				registrationCode,
 				formatDate(new Date()),
-				direction,
 			]
 		);
 
 		res.send({
 			status: 'ok',
-			message:
-				'Establecimiento registrado, comprueba tu email para activarlo',
+			message: 'Usuario registrado, comprueba tu email para activarlo',
 		});
 	} catch (error) {
 		next(error);

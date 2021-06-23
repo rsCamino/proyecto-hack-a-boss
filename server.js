@@ -27,12 +27,14 @@ const {
 } = require('./controllers/establecimientos');
 
 //* Controladores Usuarios.
-const { 
-	newUsuario, 
-	validateUsuario, 
-	getUsuario, 
-	loginUsuario }
-	 = require('./controllers/users');
+const {
+	newUsuario,
+	validateUsuario,
+	getUsuario,
+	loginUsuario,
+} = require('./controllers/users');
+
+//TODO Endpoints establecimientos.
 
 //* Obtener un establecimiento.
 app.get(
@@ -84,17 +86,15 @@ app.delete(
 	deleteEstablecimiento
 );
 
+//TODO Endpoints usuarios.
+
 //* Crear Usuario.
 
-app.post('/usuarios',newUsuario);
-
+app.post('/usuarios', newUsuario);
 
 //* Validar Usuario.
 
-app.get(
-	'/usuarios/validate/:registrationCode',
-	validateUsuario
-);
+app.get('/usuarios/validate/:registrationCode', validateUsuario);
 
 //* Obtener un Usuario.
 
