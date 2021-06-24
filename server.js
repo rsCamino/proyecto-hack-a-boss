@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const fileUpload = require('express-fileupload');
 const app = express();
 
 const { PORT } = process.env;
@@ -8,6 +9,7 @@ const { PORT } = process.env;
 //*Middlewares
 
 app.use(morgan('dev'));
+app.use(fileUpload());
 app.use(express.json());
 
 const establecimientoExist = require('./middlewares/establecimientoExist');
@@ -24,6 +26,7 @@ const {
 	recoverEstablecimientoPass,
 	resetEstablecimientoPass,
 	deleteEstablecimiento,
+	addPhotoEstablecimiento,
 } = require('./controllers/establecimientos');
 
 //* Controladores Usuarios.
@@ -84,6 +87,13 @@ app.delete(
 	establecimientoExist,
 	authEntity,
 	deleteEstablecimiento
+);
+
+//* Agrega una foto al establecimiento.
+app.post(
+	'/establecimientos/:idEstablecimiento/photos',
+	authEntity,
+	addPhotoEstablecimiento
 );
 
 //TODO Endpoints usuarios.

@@ -58,9 +58,9 @@ const main = async () => {
 		await connection.query(`
             CREATE TABLE imagenes(
                 id INT PRIMARY KEY AUTO_INCREMENT,
+                imagen VARCHAR(50) UNIQUE,
                 fechasubida DATETIME NOT NULL,
                 descripcion TEXT,
-                imagen VARCHAR(50),
                 likes int unsigned,
                 idEstablecimiento INT,
                 idUsuarios INT,
@@ -72,9 +72,10 @@ const main = async () => {
 		await connection.query(`
             CREATE TABLE valoraciones(
                 id INT PRIMARY KEY AUTO_INCREMENT,
+                imagen VARCHAR(50),
                 fechavaloracion DATETIME NOT NULL,
                 comentario TEXT,
-                puntaje VARCHAR(1),
+                puntaje VARCHAR(1) NOT NULL,
                 idUsuario INT NOT NULL,
                 idEstablecimiento INT NOT NULL,
                 deleted BOOLEAN DEFAULT false 
