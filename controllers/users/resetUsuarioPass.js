@@ -44,4 +44,3 @@ const resetUsuarioPass = async (req, res, next) => {
 };
 
 module.exports = resetUsuarioPass;
-

@@ -55,6 +55,31 @@ const recoverUsuarioPass = async (req, res, next) => {
             status: 'ok',
             message: 'Email enviado',
         });
+
+        /*MODELO TELEFONICO
+        const recoverCode = generateRandomString(20);
+
+        const smsBody = `
+            Código recuperación: ${recoverCode}
+            Si no has sido tu por favor, ignora este sms.
+            ¡Gracias!
+        `;
+
+        await sendSMS({
+            to: phoneNumber,
+            body: smsBody,
+        });
+
+        await connection.query(
+            `UPDATE usuarios SET recoverCode = ? WHERE phoneNumber = ?;`,
+            [recoverCode, phoneNumber]
+        );
+
+        res.send({
+            status: 'ok',
+            message: 'SMS enviado',
+        });
+        */
     } catch (error) {
         next(error);
     } finally {
@@ -63,4 +88,3 @@ const recoverUsuarioPass = async (req, res, next) => {
 };
 
 module.exports = recoverUsuarioPass;
-
