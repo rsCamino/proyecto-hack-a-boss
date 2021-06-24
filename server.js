@@ -98,19 +98,22 @@ app.post(
 	authEntity,
 	addPhotoEstablecimiento
 );
+
+//* Puntuar establecimiento.
+app.post(
+	'/establecimientos/:idEstableciemiento/valoraciones',
+	establecimientoExist,
+	authUser,
+	puntajeEstablecimiento
+);
+
+//* Borrar una foto de un establecimiento.
+
 app.delete(
 	'/establecimientos/:idEstablecimiento/photos/:idPhoto',
 	establecimientoExist,
 	authEntity,
 	deleteFotoEstablecimiento
-);
-
-//* Puntuar establecimiento.
-app.post(
-	'/establecimeintos/:idEstableciemiento/valoraciones',
-	establecimientoExist,
-	authUser,
-	puntajeEstablecimiento
 );
 
 //TODO Endpoints usuarios.

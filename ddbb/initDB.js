@@ -79,7 +79,7 @@ const main = async () => {
                 idUsuario INT NOT NULL,
                 idEstablecimiento INT NOT NULL,
                 deleted BOOLEAN DEFAULT false 
-                
+
             );
             `);
 

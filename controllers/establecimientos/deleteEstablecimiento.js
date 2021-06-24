@@ -15,8 +15,8 @@ const deleteEstablecimiento = async (req, res, next) => {
 		const { idEstablecimiento } = req.params;
 
 		if (
-			req.entityAuth.idEstablecimiento !== Number(idEstablecimiento) &&
-			req.entityAuth.role !== 'admin'
+			req.authEntity.idEstablecimiento !== Number(idEstablecimiento) &&
+			req.authEntity.role !== 'admin'
 		) {
 			const error = new Error(
 				'No tienes permisos para eliminar este establecimiento'

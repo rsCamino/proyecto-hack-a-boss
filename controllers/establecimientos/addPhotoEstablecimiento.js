@@ -11,7 +11,7 @@ const addPhotoEstablecimiento = async (req, res, next) => {
 		const { idEstablecimiento } = req.params;
 		const { description } = req.body;
 
-		if (req.entityAuth.idEstablecimiento !== Number(idEstablecimiento)) {
+		if (req.authEntity.idEstablecimiento !== Number(idEstablecimiento)) {
 			const error = new Error(
 				'No tienes permisos para subir fotos en el perfil de este establecimiento'
 			);

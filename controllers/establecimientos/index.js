@@ -11,6 +11,7 @@ const addPhotoEstablecimiento = require('./addPhotoEstablecimiento');
 const puntajeEstablecimiento = require('./puntajeEstablecimiento');
 const deleteFotoEstablecimiento = require('./deleteFotoEstablecimiento');
 
+
 module.exports = {
 	getEstablecimiento,
 	newEstablecimiento,
