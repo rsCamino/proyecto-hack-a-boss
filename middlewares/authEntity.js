@@ -1,7 +1,7 @@
 const getDB = require('../ddbb/db');
 const jwt = require('jsonwebtoken');
 
-const authUser = async (req, res, next) => {
+const authEntity = async (req, res, next) => {
 	let connection;
 	try {
 		connection = await getDB();
@@ -32,4 +32,4 @@ const authUser = async (req, res, next) => {
 	}
 };
 
-module.exports = authUser;
+module.exports = authEntity;
