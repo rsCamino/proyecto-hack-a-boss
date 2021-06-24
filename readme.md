@@ -30,7 +30,7 @@
 -   GET - [/users/validate/:registrationCode] - Valida un usuario recien registrado.
 -   GET - [/users/:idUser] - Retorna informacion de un usuario concreto.
 -   POST - [/users/login] - Logea a un usuario retornando un token.
--   POST - [/users/:idUser/photos] - Agrega una foto a un lugar.
+-   POST - [/users/:idUser/photos] - Agrega una foto a un usuario.
 -   POST - [/users/:idUser/photos/:idPhoto/comments] - Agrega un comentario a una foto.
 -   GET - [/users/:idUser/photos/:idPhoto] - Retorna la foto y los comentarios asociados a la foto.
 -   DELETE - [/users/idEstablecimiento/photos/:idPhoto] - Elimina una foto.

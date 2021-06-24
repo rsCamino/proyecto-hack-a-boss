@@ -28,6 +28,7 @@ const {
 	deleteEstablecimiento,
 	addPhotoEstablecimiento,
 	puntajeEstablecimiento,
+	deletePhotoEstablecimiento,
 } = require('./controllers/establecimientos');
 
 //* Controladores Usuarios.
@@ -91,20 +92,28 @@ app.delete(
 	deleteEstablecimiento
 );
 
-
 //* Agrega una foto al establecimiento.
 app.post(
 	'/establecimientos/:idEstablecimiento/photos',
 	authEntity,
-	addPhotoEstablecimiento,
+	addPhotoEstablecimiento
 );
-  
+
 //* Puntuar establecimiento.
 app.post(
-	'/establecimeintos/:idEstableciemiento/valoraciones',
+	'/establecimientos/:idEstableciemiento/valoraciones',
 	establecimientoExist,
 	authUser,
 	puntajeEstablecimiento
+);
+
+//* Borrar una foto de un establecimiento.
+
+app.delete(
+	'/establecimientos/:idEstablecimiento/photos/:idPhoto',
+	establecimientoExist,
+	authEntity,
+	deletePhotoEstablecimiento
 );
 
 //TODO Endpoints usuarios.
