@@ -28,7 +28,7 @@ const {
 	deleteEstablecimiento,
 	addPhotoEstablecimiento,
 	puntajeEstablecimiento,
-	deletePhotoEstablecimiento,
+	deleteFotoEstablecimiento,
 } = require('./controllers/establecimientos');
 
 //* Controladores Usuarios.
@@ -113,7 +113,7 @@ app.delete(
 	'/establecimientos/:idEstablecimiento/photos/:idPhoto',
 	establecimientoExist,
 	authEntity,
-	deletePhotoEstablecimiento
+	deleteFotoEstablecimiento
 );
 
 //TODO Endpoints usuarios.

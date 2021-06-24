@@ -14,7 +14,7 @@ const establecimientoExist = async (req, res, next) => {
 
 		if (establecimiento.length < 1) {
 			const error = new Error(
-				'El establecimientos que usted ha buscado no existe.'
+				'El establecimiento que usted ha buscado no existe.'
 			);
 			error.httpStatus = 404;
 			throw error;
