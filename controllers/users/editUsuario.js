@@ -9,7 +9,7 @@ const editUsuario = async (req, res, next) => {
         connection = await getDB();
 
         const { idUsuario } = req.params;
-        const { name, email } = req.body;
+        const { name, nickname, email } = req.body;
 
         if (req.userAuth.idUsuario !== Number(idUsuario)) {
             const error = new Error(
@@ -19,7 +19,7 @@ const editUsuario = async (req, res, next) => {
             throw error;
         }
 
-        if (!name && !email && !(req.files && req.files.avatar)) {
+        if (!name && !nickname && !email && !(req.files && req.files.avatar)) {
             const error = new Error('Faltan campos');
             error.httpStatus = 400;
             throw error;
@@ -32,11 +32,9 @@ const editUsuario = async (req, res, next) => {
 
         const now = new Date();
 
-
         if (req.files && req.files.avatar) {
-
-            if (establecimiento[0].avatar) {
-                await deletePhoto(establecimiento[0].avatar);
+            if (usuario[0].avatar) {
+                await deletePhoto(usuario[0].avatar);
             }
 
             const avatarName = await savePhoto(req.files.avatar);
@@ -48,7 +46,6 @@ const editUsuario = async (req, res, next) => {
         }
 
         if (email && email !== usuario[0].email) {
-
             const [existingEmail] = await connection.query(
                 `SELECT id FROM usuarios WHERE email = ?;`,
                 [email]
@@ -65,6 +62,13 @@ const editUsuario = async (req, res, next) => {
             await connection.query(
                 `UPDATE usuarios SET email = ?, modifiedAt = ? WHERE id = ?`,
                 [email, formatDate(now), idUsuario]
+            );
+        }
+        // Pueden tener 2 usuarios el mismo nickname ?//
+        if (nickname && nickname !== usuario[0].nickname) {
+            await connection.query(
+                `UPDATE usuarios SET nickname = ?, modifiedAt = ? WHERE id = ?`,
+                [nickname, formatDate(now), idUsuario]
             );
         }
 
@@ -87,4 +91,3 @@ const editUsuario = async (req, res, next) => {
 };
 
 module.exports = editUsuario;
-
