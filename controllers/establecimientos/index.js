@@ -8,6 +8,8 @@ const recoverEstablecimientoPass = require('./recoverEstablecimientoPass');
 const resetEstablecimientoPass = require('./resetEstablecimientoPass');
 const deleteEstablecimiento = require('./deleteEstablecimiento');
 const addPhotoEstablecimiento = require('./addPhotoEstablecimiento');
+const puntajeEstablecimiento = require('./puntajeEstablecimiento');
+
 
 module.exports = {
 	getEstablecimiento,
@@ -20,4 +22,5 @@ module.exports = {
 	resetEstablecimientoPass,
 	deleteEstablecimiento,
 	addPhotoEstablecimiento,
+	puntajeEstablecimiento,
 };

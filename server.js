@@ -27,6 +27,7 @@ const {
 	resetEstablecimientoPass,
 	deleteEstablecimiento,
 	addPhotoEstablecimiento,
+	puntajeEstablecimiento,
 } = require('./controllers/establecimientos');
 
 //* Controladores Usuarios.
@@ -36,6 +37,7 @@ const {
 	getUsuario,
 	loginUsuario,
 } = require('./controllers/users');
+const authUser = require('./middlewares/authEntity');
 
 //TODO Endpoints establecimientos.
 
@@ -89,11 +91,20 @@ app.delete(
 	deleteEstablecimiento
 );
 
+
 //* Agrega una foto al establecimiento.
 app.post(
 	'/establecimientos/:idEstablecimiento/photos',
 	authEntity,
-	addPhotoEstablecimiento
+	addPhotoEstablecimiento,
+);
+  
+//* Puntuar establecimiento.
+app.post(
+	'/establecimeintos/:idEstableciemiento/valoraciones',
+	establecimientoExist,
+	authUser,
+	puntajeEstablecimiento
 );
 
 //TODO Endpoints usuarios.

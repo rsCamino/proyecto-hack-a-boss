@@ -49,7 +49,7 @@ const main = async () => {
                 activo BOOLEAN DEFAULT false,
                 descripcion TEXT,
                 direccion VARCHAR(100) NOT NULL,
-                avatar varchar(50),
+                avatar VARCHAR(50),
                 codigoRegistro VARCHAR(100),
                 codigoRecuperacion VARCHAR(100)
         );
@@ -116,7 +116,7 @@ const main = async () => {
 			const email = faker.internet.email();
 			const contraseña = faker.internet.password();
 			const nombre = faker.name.findName();
-			const nickname = faker.datatype.uuid();
+			const nickname = faker.name.firstName();
 			const fechaCreacion = now;
 			await connection.query(`
             INSERT INTO usuarios(
