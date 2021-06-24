@@ -23,7 +23,7 @@ const authEntity = async (req, res, next) => {
 			throw error;
 		}
 
-		req.entityAuth = tokenInfo;
+		req.authEntity = tokenInfo;
 		next();
 	} catch (error) {
 		next(error);
