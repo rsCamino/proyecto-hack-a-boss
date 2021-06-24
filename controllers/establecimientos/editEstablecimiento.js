@@ -9,8 +9,6 @@ const editEstablecimiento = async (req, res, next) => {
 
 		const { idEstablecimiento } = req.params;
 		const { name, email, description, direction } = req.body;
-		console.log(req.body);
-		console.log(req.files);
 
 		if (req.entityAuth.idEstablecimiento !== Number(idEstablecimiento)) {
 			const error = new Error(

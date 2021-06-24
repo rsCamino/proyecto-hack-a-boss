@@ -8,11 +8,11 @@ const deleteFotoEstablecimiento = async (req, res, next) => {
 	try {
 		connection = await getDB();
 
-		const { idEstablecimientos, idPhoto } = req.params;
+		const { idEstablecimiento, idPhoto } = req.params;
 
 		const [photo] = await connection.query(
-			`SELECT name FROM imagenes WHERE id = ? AND idImagenes = ?;`,
-			[idPhoto, idEstablecimientos]
+			`SELECT imagen FROM imagenes WHERE idEstablecimiento = ?;`,
+			[idEstablecimiento]
 		);
 
 		if (photo.length < 1) {
@@ -22,16 +22,16 @@ const deleteFotoEstablecimiento = async (req, res, next) => {
 		}
 
 		// Borramos la foto del servidor.
-		await deletePhoto(photo[0].name);
+		await deletePhoto(photo[idPhoto].name);
 
 		// Borramos la foto de la base de datos.
 		await connection.query(
-			`DELETE FROM imagenes WHERE id = ? AND idImagenes = ?;`,
-			[idPhoto, idEstablecimientos]
+			`DELETE imagen FROM imagenes WHERE imagen = ?, idEstablecimiento = ?;`,
+			[photo[idPhoto].name, idEstablecimiento]
 		);
 
 		res.send({
-			status: 'ok',
+			status: 'Ok',
 			message: 'Foto eliminada',
 		});
 	} catch (error) {

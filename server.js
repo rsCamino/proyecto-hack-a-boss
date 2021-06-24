@@ -99,7 +99,7 @@ app.post(
 	addPhotoEstablecimiento
 );
 app.delete(
-	'/establecimientos/idEstablecimiento/photos/:idPhoto',
+	'/establecimientos/:idEstablecimiento/photos/:idPhoto',
 	establecimientoExist,
 	authEntity,
 	deleteFotoEstablecimiento
