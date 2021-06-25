@@ -141,14 +141,13 @@ app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 
 app.post('/usuarios/login', loginUsuario);
 
-<<<<<<< HEAD
 //* Subir imagen.
 app.post('/usuarios/:idUsuarios/photos', authEntity, addPhotoUsuario);
 
 //* Borrar fotos.
 app.delete(
 	'/usuarios/:idUsuarios/photos/:idPhoto',
-
+        //Se debe añadir userExist
 	authEntity,
 	deletePhotoUsuario
 );
