@@ -38,11 +38,16 @@ const {
 	validateUsuario,
 	getUsuario,
 	loginUsuario,
+<<<<<<< HEAD
+	addPhotoUsuario,
+	deletePhotoUsuario,
+=======
 	editUsuario,
 	deleteUsuario,
 	editUsuarioPass,
 	recoverUsuarioPass,
 	resetUsuarioPass,
+>>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -138,6 +143,19 @@ app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 
 app.post('/usuarios/login', loginUsuario);
 
+<<<<<<< HEAD
+//* Subir imagen.
+app.post('/usuarios/:idUsuarios/photos', authEntity, addPhotoUsuario);
+
+//* Borrar fotos.
+app.delete(
+	'/usuarios/:idUsuarios/photos/:idPhoto',
+
+	authEntity,
+	deletePhotoUsuario
+);
+
+=======
 //*Editar un usuario. Cambios Viernes 25
 
 app.put('/usuarios/:idUsuario', usuarioExist, authEntity, editUsuario);
@@ -163,6 +181,7 @@ app.put('/usuarios/password/reset', resetUsuarioPass);
 
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
 
+>>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
 //! Middleware de error.
 
 app.use((error, req, res, next) => {
