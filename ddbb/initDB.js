@@ -64,7 +64,7 @@ const main = async () => {
                 descripcion TEXT,
                 likes int unsigned,
                 idEstablecimiento INT,
-                idUsuarios INT,
+                idUsuario INT,
                 deleted BOOLEAN DEFAULT false 
                 
             );
@@ -91,8 +91,8 @@ const main = async () => {
             id INT PRIMARY KEY AUTO_INCREMENT,
             likes BOOLEAN,
             comentario TEXT,
-            idUsuarios INT NOT NULL,
-            idImagenes INT NOT NULL,
+            idUsuario INT NOT NULL,
+            idImagen INT NOT NULL,
             deleted BOOLEAN DEFAULT false 
             );
             `);

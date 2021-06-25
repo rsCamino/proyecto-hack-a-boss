@@ -37,6 +37,8 @@ const {
 	validateUsuario,
 	getUsuario,
 	loginUsuario,
+	addPhotoUsuario,
+	deletePhotoUsuario,
 } = require('./controllers/users');
 const authUser = require('./middlewares/authEntity');
 
@@ -133,6 +135,17 @@ app.get('/usuarios/:idUsuarios', getUsuario);
 //*Loguearse como usuario.
 
 app.post('/usuarios/login', loginUsuario);
+
+//* Subir imagen.
+app.post('/usuarios/:idUsuarios/photos', authEntity, addPhotoUsuario);
+
+//* Borrar fotos.
+app.delete(
+	'/usuarios/:idUsuarios/photos/:idPhoto',
+
+	authEntity,
+	deletePhotoUsuario
+);
 
 //! Middleware de error.
 
