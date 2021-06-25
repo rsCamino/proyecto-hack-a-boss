@@ -26,7 +26,7 @@ const main = async () => {
                 fotoperfil VARCHAR(50), 
                 email VARCHAR(50) UNIQUE,
                 fechaCreacion DATETIME NOT NULL,
-                modificadoEn DATETIME NULL,
+                modificadoEn DATETIME,
                 contraseña VARCHAR(512) NOT NULL,
                 activo BOOLEAN DEFAULT false,
                 deleted BOOLEAN DEFAULT false,
@@ -40,11 +40,11 @@ const main = async () => {
 		await connection.query(`
             CREATE TABLE establecimientos(
                 id INT PRIMARY KEY AUTO_INCREMENT,
-                nombre VARCHAR(70),
+                nombre VARCHAR(70) NOT NULL,
                 email VARCHAR(50) UNIQUE,
                 contraseña VARCHAR(512) NOT NULL,
                 fechaCreacion DATETIME NOT NULL,
-                modificadoEn DATETIME NULL,
+                modificadoEn DATETIME,
                 deleted BOOLEAN DEFAULT false,
                 activo BOOLEAN DEFAULT false,
                 descripcion TEXT,

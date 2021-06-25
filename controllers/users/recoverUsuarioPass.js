@@ -1,36 +1,36 @@
-const getDB = require('../../bbdd/db');
+const getDB = require('../../ddbb/db');
 const { generateRandomString, sendMail } = require('../../helpers');
 
 const recoverUsuarioPass = async (req, res, next) => {
-    let connection;
+	let connection;
 
-    try {
-        connection = await getDB();
+	try {
+		connection = await getDB();
 
-        const { email } = req.body;
+		const { email } = req.body;
 
-        console.log('HOLA');
+		console.log('HOLA');
 
-        if (!email) {
-            const error = new Error('Faltan campos');
-            error.httpStatus = 400;
-            throw error;
-        }
+		if (!email) {
+			const error = new Error('Faltan campos');
+			error.httpStatus = 400;
+			throw error;
+		}
 
-        const [usuario] = await connection.query(
-            `SELECT id FROM usuarioss WHERE email = ?;`,
-            [email]
-        );
+		const [usuario] = await connection.query(
+			`SELECT id FROM usuarios WHERE email = ?;`,
+			[email]
+		);
 
-        if (usuario.length < 1) {
-            const error = new Error(`No existe ningún usuario con ese email`);
-            error.httpStatus = 404;
-            throw error;
-        }
+		if (usuario.length < 1) {
+			const error = new Error(`No existe ningún usuario con ese email`);
+			error.httpStatus = 404;
+			throw error;
+		}
 
-        const recoverCode = generateRandomString(20);
+		const recoverCode = generateRandomString(20);
 
-        const emailBody = `
+		const emailBody = `
             Se solicitó un cambio de contraseña para el usuario registrado con este email en la app Ruta do Camiño.
 
             El código de recuperación es: ${recoverCode}
@@ -40,23 +40,23 @@ const recoverUsuarioPass = async (req, res, next) => {
             ¡Gracias!
         `;
 
-        await sendMail({
-            to: email,
-            subject: 'Cambio de contraseña en Ruta do Camiño',
-            body: emailBody,
-        });
+		await sendMail({
+			to: email,
+			subject: 'Cambio de contraseña en Ruta do Camiño',
+			body: emailBody,
+		});
 
-        await connection.query(
-            `UPDATE usuarios SET recoverCode = ? WHERE email = ?;`,
-            [recoverCode, email]
-        );
+		await connection.query(
+			`UPDATE usuarios SET codigoRecuperacion = ? WHERE email = ?;`,
+			[recoverCode, email]
+		);
 
-        res.send({
-            status: 'ok',
-            message: 'Email enviado',
-        });
+		res.send({
+			status: 'ok',
+			message: 'Email enviado',
+		});
 
-        /*MODELO TELEFONICO
+		/*MODELO TELEFONICO
         const recoverCode = generateRandomString(20);
 
         const smsBody = `
@@ -80,11 +80,11 @@ const recoverUsuarioPass = async (req, res, next) => {
             message: 'SMS enviado',
         });
         */
-    } catch (error) {
-        next(error);
-    } finally {
-        if (connection) connection.release();
-    }
+	} catch (error) {
+		next(error);
+	} finally {
+		if (connection) connection.release();
+	}
 };
 
 module.exports = recoverUsuarioPass;

@@ -16,7 +16,7 @@ const loginUsuario = async (req, res, next) => {
 		}
 
 		const [usuario] = await connection.query(
-			`SELECT id, activo FROM usuario WHERE email = ? AND contraseña = SHA2(?, 512);`,
+			`SELECT id, activo FROM usuarios WHERE email = ? AND contraseña = SHA2(?, 512);`,
 			[email, password]
 		);
 
@@ -34,7 +34,7 @@ const loginUsuario = async (req, res, next) => {
 		}
 
 		const tokenInfo = {
-			idEstablecimiento: usuario[0].id,
+			idUsuario: usuario[0].id,
 		};
 
 		const token = jwt.sign(tokenInfo, process.env.SECRET, {
