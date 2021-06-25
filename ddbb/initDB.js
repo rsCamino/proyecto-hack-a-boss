@@ -36,6 +36,7 @@ const main = async () => {
                 );
                                                 
         `);
+
 		console.log('tabla1');
 		await connection.query(`
             CREATE TABLE establecimientos(
