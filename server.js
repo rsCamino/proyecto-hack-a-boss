@@ -46,6 +46,7 @@ const {
 	recoverUsuarioPass,
 	resetUsuarioPass,
 	addNewComment,
+	deleteComment,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -184,6 +185,12 @@ app.put('/usuarios/password/reset', resetUsuarioPass);
 //* Eliminar un usuario. Cambios Viernes 25
 
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
+
+app.delete(
+	'/usuarios/:idUsuario/photos/:idPhoto/comments/:idComentario/delete',
+	authEntity,
+	deleteComment
+);
 
 //! Middleware de error.
 
