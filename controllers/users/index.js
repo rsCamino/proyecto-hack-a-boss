@@ -2,9 +2,7 @@ const validateUsuario = require('./validateUsuario');
 const newUsuario = require('./newUsuario');
 const getUsuario = require('./getUsuario');
 const loginUsuario = require('./loginUsuario');
-
 const addPhotoUsuario = require('./addPhotoUsuario');
-
 const editUsuario = require('./editUsuario');
 const deleteUsuario = require('./deleteUsuario');
 const editUsuarioPass = require('./editUsuarioPass');
