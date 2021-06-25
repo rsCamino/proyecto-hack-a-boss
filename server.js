@@ -45,7 +45,7 @@ const {
 	editUsuarioPass,
 	recoverUsuarioPass,
 	resetUsuarioPass,
-
+	addNewComment,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -142,14 +142,22 @@ app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 app.post('/usuarios/login', loginUsuario);
 
 //* Subir imagen.
-app.post('/usuarios/:idUsuarios/photos', authEntity, addPhotoUsuario);
+app.post('/usuarios/:idUsuario/photos', authEntity, addPhotoUsuario);
 
 //* Borrar fotos.
 app.delete(
 	'/usuarios/:idUsuarios/photos/:idPhoto',
-        //Se debe añadir userExist
+	//Se debe añadir userExist
 	authEntity,
 	deletePhotoUsuario
+);
+
+//*Agregar comentario
+
+app.post(
+	'/usuarios/:idUsuario/photos/:idImagen/comments',
+	authEntity,
+	addNewComment
 );
 
 //*Editar un usuario. Cambios Viernes 25

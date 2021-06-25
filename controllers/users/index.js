@@ -9,6 +9,7 @@ const editUsuarioPass = require('./editUsuarioPass');
 const recoverUsuarioPass = require('./recoverUsuarioPass');
 const resetUsuarioPass = require('./resetUsuarioPass');
 const deletePhotoUsuario = require('./deletePhotoUsuario');
+const addNewComment = require('./addNewComment');
 
 module.exports = {
 	validateUsuario,
@@ -22,4 +23,5 @@ module.exports = {
 	recoverUsuarioPass,
 	resetUsuarioPass,
 	deletePhotoUsuario,
+	addNewComment,
 };

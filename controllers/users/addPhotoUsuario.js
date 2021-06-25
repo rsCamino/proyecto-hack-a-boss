@@ -10,7 +10,7 @@ const addPhotoUsuario = async (req, res, next) => {
 
 		const { idUsuario } = req.params;
 		const { description } = req.body;
-
+		console.log(idUsuario);
 		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(
 				'No tienes permisos para subir fotos en el perfil de este usuario'
