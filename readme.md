@@ -26,16 +26,17 @@
 
 ## Endpoints del usuario.
 
--   POST - [/users] - Crea un usuario pendiente de activar.
--   GET - [/users/validate/:registrationCode] - Valida un usuario recien registrado.
--   GET - [/users/:idUser] - Retorna informacion de un usuario concreto.
--   POST - [/users/login] - Logea a un usuario retornando un token.
--   POST - [/users/:idUser/photos] - Agrega una foto a un usuario.
--   POST - [/users/:idUser/photos/:idPhoto/comments] - Agrega un comentario a una foto.
+-   POST - [/users] - Crea un usuario pendiente de activar. ✅
+-   GET - [/users/validate/:registrationCode] - Valida un usuario recien registrado. ✅
+-   GET - [/users/:idUser] - Retorna informacion de un usuario concreto. ✅
+-   POST - [/users/login] - Logea a un usuario retornando un token. ✅
+-   POST - [/users/:idUser/photos] - Agrega una foto a un perfil de usuario. ✅
+-   POST - [/users/:idUser/photos/:idPhoto/comments] - Agrega un comentario a una foto. ✅
 -   GET - [/users/:idUser/photos/:idPhoto] - Retorna la foto y los comentarios asociados a la foto.
 -   DELETE - [/users/idEstablecimiento/photos/:idPhoto] - Elimina una foto.
--   PUT - [/users/:idUser] - Edita (nombre, email y/o avatar) un usuario.
--   PUT - [/users/:idUser/password] - Edita la contraseña de un usuario.
--   PUT - [/users/password/recover] - Envia un correo con el codigo de recuperación de contraseña a un email.
--   PUT - [/users/password/reset] - Cambia la contraseña de un usuario.
--   DELETE - [/users/:idUser] - Dar de baja a un usuario.
+-   DELETE - [/usuarios/:idUsuario/photos/:idPhoto/comments/:idComentario/delete] - Eliminar un comentario ✅
+-   PUT - [/users/:idUser] - Edita (nombre, email y/o avatar) un usuario. ✅
+-   PUT - [/users/:idUser/password] - Edita la contraseña de un usuario. ✅
+-   PUT - [/users/password/recover] - Envia un correo con el codigo de recuperación de contraseña a un email. ✅
+-   PUT - [/users/password/reset] - Cambia la contraseña de un usuario. ✅
+-   DELETE - [/users/:idUser] - Dar de baja a un usuario. ✅
