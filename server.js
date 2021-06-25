@@ -38,16 +38,14 @@ const {
 	validateUsuario,
 	getUsuario,
 	loginUsuario,
-<<<<<<< HEAD
 	addPhotoUsuario,
 	deletePhotoUsuario,
-=======
 	editUsuario,
 	deleteUsuario,
 	editUsuarioPass,
 	recoverUsuarioPass,
 	resetUsuarioPass,
->>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
+
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
