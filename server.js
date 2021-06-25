@@ -153,7 +153,6 @@ app.delete(
 	deletePhotoUsuario
 );
 
-=======
 //*Editar un usuario. Cambios Viernes 25
 
 app.put('/usuarios/:idUsuario', usuarioExist, authEntity, editUsuario);
@@ -179,7 +178,6 @@ app.put('/usuarios/password/reset', resetUsuarioPass);
 
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
 
->>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
 //! Middleware de error.
 
 app.use((error, req, res, next) => {
