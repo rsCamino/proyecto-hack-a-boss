@@ -13,6 +13,7 @@ app.use(fileUpload());
 app.use(express.json());
 
 const establecimientoExist = require('./middlewares/establecimientoExist');
+const usuarioExist = require('./middlewares/usuarioExist'); //Cambios Viernes 25
 const authEntity = require('./middlewares/authEntity');
 
 //* Controladores de establecimientos.
@@ -31,16 +32,23 @@ const {
 	deleteFotoEstablecimiento,
 } = require('./controllers/establecimientos');
 
-//* Controladores Usuarios.
+//* Controladores Usuarios. Cambios Viernes 25.
 const {
 	newUsuario,
 	validateUsuario,
 	getUsuario,
 	loginUsuario,
+<<<<<<< HEAD
 	addPhotoUsuario,
 	deletePhotoUsuario,
+=======
+	editUsuario,
+	deleteUsuario,
+	editUsuarioPass,
+	recoverUsuarioPass,
+	resetUsuarioPass,
+>>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
 } = require('./controllers/users');
-const authUser = require('./middlewares/authEntity');
 
 //TODO Endpoints establecimientos.
 
@@ -105,7 +113,7 @@ app.post(
 app.post(
 	'/establecimientos/:idEstableciemiento/valoraciones',
 	establecimientoExist,
-	authUser,
+	authEntity,
 	puntajeEstablecimiento
 );
 
@@ -128,14 +136,14 @@ app.post('/usuarios', newUsuario);
 
 app.get('/usuarios/validate/:registrationCode', validateUsuario);
 
-//* Obtener un Usuario.
-
-app.get('/usuarios/:idUsuarios', getUsuario);
+//* Obtener un Usuario. Cambios Viernes 25
+app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 
 //*Loguearse como usuario.
 
 app.post('/usuarios/login', loginUsuario);
 
+<<<<<<< HEAD
 //* Subir imagen.
 app.post('/usuarios/:idUsuarios/photos', authEntity, addPhotoUsuario);
 
@@ -147,6 +155,33 @@ app.delete(
 	deletePhotoUsuario
 );
 
+=======
+//*Editar un usuario. Cambios Viernes 25
+
+app.put('/usuarios/:idUsuario', usuarioExist, authEntity, editUsuario);
+
+//*Editar la contraseña de un usuario. Cambios viernes 25
+
+app.put(
+	'/usuarios/:idUsuario/password',
+	usuarioExist,
+	authEntity,
+	editUsuarioPass
+);
+
+//*Recuperar contraseña. Cambios viernes 25
+
+app.put('/usuarios/password/recover', recoverUsuarioPass);
+
+//*Reset contraseña. Cambios Viernes 25. Esto tiene sentido con la anterior?
+
+app.put('/usuarios/password/reset', resetUsuarioPass);
+
+//* Eliminar un usuario. Cambios Viernes 25
+
+app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
+
+>>>>>>> 5dd491a6eb9754208e7ffa971ef41eed25768130
 //! Middleware de error.
 
 app.use((error, req, res, next) => {

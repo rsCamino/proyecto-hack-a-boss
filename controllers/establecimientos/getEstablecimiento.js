@@ -39,7 +39,7 @@ const getEstablecimiento = async (req, res, next) => {
 			data: establecimientoInfo,
 		});
 	} catch (error) {
-		console.log(error);
+		cnext(error);
 	} finally {
 		if (connection) connection.release();
 	}

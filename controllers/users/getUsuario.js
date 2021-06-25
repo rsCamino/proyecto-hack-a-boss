@@ -9,37 +9,35 @@ const getUsuario = async (req, res, next) => {
 		const { idUsuario } = req.params;
 
 		const [usuario] = await connection.query(
-			`SELECT id, nombre, avatar, direccion, email, descripcion, fechaCreacion, modificadoEn FROM establecimientos WHERE id = ?;`,
+			`SELECT id, nombre, nickname, fotoperfil, email, fechaCreacion, modificadoEn FROM usuarios WHERE id = ?;`,
 			[idUsuario]
 		);
 
-		if (!usuario[0].descripcion) {
-			usuario[0].descripcion = 'No hay descripcion.';
-		}
-		if (!usuario[0].modificadoEn) {
-			usuario[0].modificadoEn =
-				'Este usuario nunca se ha editado';
-		}
+		if ((usuario[0].deleted = 0)) {
+			const usuarioInfo = {
+				name: usuario[0].nombre,
+				nickname: usuario[0].nickname,
+				fotoperfil: usuario[0].fotoperfil,
+			};
 
-		const usuarioInfo = {
-			name: usuario[0].nombre,
-			avatar: usuario[0].avatar,
-			description: usuario[0].descripcion,
-			direction: usuario.direccion,
-		};
+			if (req.authEntity.idUsuario === Number(idUsuario)) {
+				usuarioInfo.email = usuario[0].email;
+				usuarioInfo.modifiedAt = usuario[0].modificadoEn;
+				usuarioInfo.createdAt = usuario[0].fechaCreacion;
+			}
 
-		if (req.entityAuth.idEstablecimiento === Number(idUsuario)) {
-			usuarioInfo.email = usuario[0].email;
-			usuarioInfo.modifiedAt = usuario[0].modificadoEn;
-			usuarioInfo.createdAt = usuario[0].fechaCreacion;
+			res.send({
+				status: 'ok',
+				data: usuarioInfo,
+			});
+		} else {
+			res.send({
+				status: 'Deleted',
+				data: 'Usuario eliminado de la base de datos',
+			});
 		}
-
-		res.send({
-			status: 'ok',
-			data: usuarioInfo,
-		});
 	} catch (error) {
-		console.log(error);
+		next(error);
 	} finally {
 		if (connection) connection.release();
 	}

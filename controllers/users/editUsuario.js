@@ -1,93 +1,109 @@
-const { id } = require('date-fns/locale');
-const getDB = require('../../bbdd/db');
+const getDB = require('../../ddbb/db');
 const { savePhoto, deletePhoto, formatDate } = require('../../helpers');
 
 const editUsuario = async (req, res, next) => {
-    let connection;
+	let connection;
 
-    try {
-        connection = await getDB();
+	try {
+		connection = await getDB();
 
-        const { idUsuario } = req.params;
-        const { name, nickname, email } = req.body;
+		const { idUsuario } = req.params;
 
-        if (req.userAuth.idUsuario !== Number(idUsuario)) {
-            const error = new Error(
-                'No tienes permisos para editar este usuario'
-            );
-            error.httpStatus = 403;
-            throw error;
-        }
+		const { name, nickname, email } = req.body;
+		if (req.authEntity.idUsuario !== Number(idUsuario)) {
+			const error = new Error(
+				'No tienes permisos para editar este usuario'
+			);
+			error.httpStatus = 403;
+			throw error;
+		}
 
-        if (!name && !nickname && !email && !(req.files && req.files.avatar)) {
-            const error = new Error('Faltan campos');
-            error.httpStatus = 400;
-            throw error;
-        }
+		if (
+			!name &&
+			!nickname &&
+			!email &&
+			!(req.files && req.files.fotoperfil)
+		) {
+			const error = new Error('Faltan campos');
+			error.httpStatus = 400;
+			throw error;
+		}
 
-        const [usuario] = await connection.query(
-            `SELECT email, avatar FROM usuarios WHERE id = ?`,
-            [idUsuario]
-        );
+		const [usuario] = await connection.query(
+			`SELECT email, nombre, fechaCreacion, nickname fotoperfil FROM usuarios WHERE id = ?`,
+			[idUsuario]
+		);
 
-        const now = new Date();
+		const now = new Date();
 
-        if (req.files && req.files.avatar) {
-            if (usuario[0].avatar) {
-                await deletePhoto(usuario[0].avatar);
-            }
+		if (req.files && req.files.fotoperfil) {
+			if (usuario[0].fotoperfil) {
+				await deletePhoto(usuario[0].fotoperfil);
+			}
 
-            const avatarName = await savePhoto(req.files.avatar);
+			const fotoperfilName = await savePhoto(req.files.fotoperfil);
 
-            await connection.query(
-                `UPDATE usuarios SET avatar = ?, modifiedAt = ? WHERE id = ?;`,
-                [avatarName, formatDate(now), idUsuario]
-            );
-        }
+			await connection.query(
+				`UPDATE usuarios SET modificadoEn = ? WHERE id = ?;`,
+				[formatDate(now), idUsuario]
+			);
+		}
 
-        if (email && email !== usuario[0].email) {
-            const [existingEmail] = await connection.query(
-                `SELECT id FROM usuarios WHERE email = ?;`,
-                [email]
-            );
+		if (email && email !== usuario[0].email) {
+			const [existingEmail] = await connection.query(
+				`SELECT id FROM usuarios WHERE email = ?;`,
+				[email]
+			);
 
-            if (existingEmail.length > 0) {
-                const error = new Error(
-                    'Ya existe un usuario con el email proporcionado en la base de datos'
-                );
-                error.httpStatus = 409;
-                throw error;
-            }
+			if (existingEmail.length > 0) {
+				const error = new Error(
+					'Ya existe un usuario con el email proporcionado en la base de datos'
+				);
+				error.httpStatus = 409;
+				throw error;
+			}
 
-            await connection.query(
-                `UPDATE usuarios SET email = ?, modifiedAt = ? WHERE id = ?`,
-                [email, formatDate(now), idUsuario]
-            );
-        }
-        // Pueden tener 2 usuarios el mismo nickname ?//
-        if (nickname && nickname !== usuario[0].nickname) {
-            await connection.query(
-                `UPDATE usuarios SET nickname = ?, modifiedAt = ? WHERE id = ?`,
-                [nickname, formatDate(now), idUsuario]
-            );
-        }
+			await connection.query(
+				`UPDATE usuarios SET email = ?, modificadoEn = ? WHERE id = ?`,
+				[email, formatDate(now), idUsuario]
+			);
+		}
+		if (nickname && nickname !== usuario[0].nickname) {
+			const [existingNickname] = await connection.query(
+				`SELECT id FROM usuarios WHERE nickname = ?;`,
+				[nickname]
+			);
 
-        if (name && usuario[0].name !== name) {
-            await connection.query(
-                `UPDATE usuarios SET name = ?, modifiedAt = ? WHERE id = ?`,
-                [name, formatDate(now), idUsuario]
-            );
-        }
+			if (existingNickname.length > 0) {
+				const error = new Error(
+					'Ya existe un usuario con el nickname proporcionado en la base de datos'
+				);
+				error.httpStatus = 409;
+				throw error;
+			}
 
-        res.send({
-            status: 'ok',
-            message: 'Datos de usuario actualizados',
-        });
-    } catch (error) {
-        next(error);
-    } finally {
-        if (connection) connection.release();
-    }
+			await connection.query(
+				`UPDATE usuarios SET nickname = ?, modificadoEn = ? WHERE id = ?`,
+				[nickname, formatDate(now), idUsuario]
+			);
+		}
+
+		if (name && usuario[0].name !== name) {
+			await connection.query(
+				`UPDATE usuarios SET name = ?, modificadoEn = ? WHERE id = ?`,
+				[name, formatDate(now), idUsuario]
+			);
+		}
+
+		res.send({
+			status: 'ok',
+			message: 'Datos de usuario actualizados',
+		});
+	} catch (error) {
+		next(error);
+	} finally {
+		if (connection) connection.release();
+	}
 };
 
 module.exports = editUsuario;
