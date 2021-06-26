@@ -13,7 +13,7 @@ app.use(fileUpload());
 app.use(express.json());
 
 const establecimientoExist = require('./middlewares/establecimientoExist');
-const usuarioExist = require('./middlewares/usuarioExist'); //Cambios Viernes 25
+const usuarioExist = require('./middlewares/usuarioExist');
 const authEntity = require('./middlewares/authEntity');
 
 //* Controladores de establecimientos.
@@ -32,7 +32,7 @@ const {
 	deleteFotoEstablecimiento,
 } = require('./controllers/establecimientos');
 
-//* Controladores Usuarios. Cambios Viernes 25.
+//* Controladores Usuarios. .
 const {
 	newUsuario,
 	validateUsuario,
@@ -128,18 +128,15 @@ app.delete(
 //TODO Endpoints usuarios.
 
 //* Crear Usuario.
-
 app.post('/usuarios', newUsuario);
 
 //* Validar Usuario.
-
 app.get('/usuarios/validate/:registrationCode', validateUsuario);
 
-//* Obtener un Usuario. Cambios Viernes 25
+//* Obtener un Usuario.
 app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 
 //*Loguearse como usuario.
-
 app.post('/usuarios/login', loginUsuario);
 
 //* Subir imagen.
@@ -147,26 +144,23 @@ app.post('/usuarios/:idUsuario/photos', authEntity, addPhotoUsuario);
 
 //* Borrar fotos.
 app.delete(
-	'/usuarios/:idUsuarios/photos/:idPhoto',
-	//Se debe añadir userExist
+	'/usuarios/:idUsuario/photos/:idPhoto',
+	usuarioExist,
 	authEntity,
 	deletePhotoUsuario
 );
 
 //*Agregar comentario
-
 app.post(
 	'/usuarios/:idUsuario/photos/:idImagen/comments',
 	authEntity,
 	addNewComment
 );
 
-//*Editar un usuario. Cambios Viernes 25
-
+//*Editar un usuario.
 app.put('/usuarios/:idUsuario', usuarioExist, authEntity, editUsuario);
 
-//*Editar la contraseña de un usuario. Cambios viernes 25
-
+//*Editar la contraseña de un usuario.
 app.put(
 	'/usuarios/:idUsuario/password',
 	usuarioExist,
@@ -174,16 +168,13 @@ app.put(
 	editUsuarioPass
 );
 
-//*Recuperar contraseña. Cambios viernes 25
-
+//*Recuperar contraseña.
 app.put('/usuarios/password/recover', recoverUsuarioPass);
 
-//*Reset contraseña. Cambios Viernes 25. Esto tiene sentido con la anterior?
-
+//*Reset contraseña. . Esto tiene sentido con la anterior?
 app.put('/usuarios/password/reset', resetUsuarioPass);
 
-//* Eliminar un usuario. Cambios Viernes 25
-
+//* Eliminar un usuario.
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
 
 app.delete(

@@ -14,7 +14,7 @@ const usuarioExist = async (req, res, next) => {
 
 		if (usuario.length < 1) {
 			const error = new Error(
-				'El usuario que usted ha buscado no existe.'
+				'El usuario que usted ha ingresado no existe.'
 			);
 			error.httpStatus = 404;
 			throw error;

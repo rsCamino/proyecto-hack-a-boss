@@ -10,6 +10,7 @@ const editUsuario = async (req, res, next) => {
 		const { idUsuario } = req.params;
 
 		const { name, nickname, email } = req.body;
+
 		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(
 				'No tienes permisos para editar este usuario'
@@ -30,7 +31,7 @@ const editUsuario = async (req, res, next) => {
 		}
 
 		const [usuario] = await connection.query(
-			`SELECT email, nombre, fechaCreacion, nickname fotoperfil FROM usuarios WHERE id = ?`,
+			`SELECT email, nombre, fechaCreacion, nickname, fotoperfil FROM usuarios WHERE id = ?`,
 			[idUsuario]
 		);
 
@@ -44,8 +45,8 @@ const editUsuario = async (req, res, next) => {
 			const fotoperfilName = await savePhoto(req.files.fotoperfil);
 
 			await connection.query(
-				`UPDATE usuarios SET modificadoEn = ? WHERE id = ?;`,
-				[formatDate(now), idUsuario]
+				`UPDATE usuarios SET fotoperfil = ?, modificadoEn = ? WHERE id = ?;`,
+				[fotoperfilName, formatDate(now), idUsuario]
 			);
 		}
 
