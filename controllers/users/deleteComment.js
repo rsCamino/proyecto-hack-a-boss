@@ -23,14 +23,6 @@ const deleteComment = async (req, res, next) => {
 			[idUsuario, idPhoto]
 		);
 
-		if (comentarios.length < 1) {
-			const error = new Error(
-				'No existe el comentario en esta imagen de tu usuario.'
-			);
-			error.httpStatus = 404;
-			throw error;
-		}
-
 		const idComentarios = comentarios.map((comentario) => comentario.id);
 
 		if (idComentarios.includes(Number(idComentario))) {
@@ -40,7 +32,7 @@ const deleteComment = async (req, res, next) => {
 			);
 		} else {
 			const error = new Error(
-				'No existe el comentario que quieres eliminar.'
+				'El comentario que intentas eliminar, no existe en esta imagen.'
 			);
 			error.httpStatus = 404;
 			throw error;

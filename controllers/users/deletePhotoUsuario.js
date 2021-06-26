@@ -26,12 +26,6 @@ const deletePhotoUsuario = async (req, res, next) => {
 			[idPhoto]
 		);
 
-		if (photo.length < 1) {
-			const error = new Error('La foto no existe');
-			error.httpStatus = 404;
-			throw error;
-		}
-
 		await deletePhoto(photo[0].imagen);
 
 		await connection.query(`DELETE FROM imagenes WHERE id = ?;`, [idPhoto]);
