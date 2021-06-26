@@ -30,6 +30,10 @@ const deleteUsuario = async (req, res, next) => {
 			[idUsuario]
 		);
 
+		if (establecimiento[0].fotoperfil) {
+			await deletePhoto(establecimiento[0].fotoperfil);
+		}
+
 		// Hacemos un update en la tabla de usuarios.
 		await connection.query(
 			`

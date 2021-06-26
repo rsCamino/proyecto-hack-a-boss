@@ -9,8 +9,6 @@ const recoverUsuarioPass = async (req, res, next) => {
 
 		const { email } = req.body;
 
-		console.log('HOLA');
-
 		if (!email) {
 			const error = new Error('Faltan campos');
 			error.httpStatus = 400;
@@ -53,7 +51,8 @@ const recoverUsuarioPass = async (req, res, next) => {
 
 		res.send({
 			status: 'ok',
-			message: 'Email enviado',
+			message:
+				'Se ha enviado un correo a tu email con el codigo de recuperacion, por favor revisalo y sigue los pasos para recuperar la contraseña',
 		});
 
 		/*MODELO TELEFONICO

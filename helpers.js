@@ -5,7 +5,6 @@ const { ensureDir, unlink } = require('fs-extra');
 const sgMail = require('@sendgrid/mail');
 const sharp = require('sharp');
 const { format } = require('date-fns');
-
 const { UPLOADS_DIRECTORY } = process.env;
 const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
 

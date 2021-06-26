@@ -11,7 +11,9 @@ const editUsuarioPass = async (req, res, next) => {
 		const { idUsuario } = req.params;
 		const { oldPassword, newPassword } = req.body;
 
-		if (req.userAuth.idUsuario !== Number(idUsuario)) {
+		console.log(req.authEntity);
+
+		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(
 				'No tienes permisos para editar este usuario'
 			);
@@ -31,7 +33,7 @@ const editUsuarioPass = async (req, res, next) => {
 
 		// Comprobamos si la contraseña antigua es correcta.
 		const [usuario] = await connection.query(
-			`SELECT id FROM usuarios WHERE id = ? AND password = SHA2(?, 512);`,
+			`SELECT id FROM usuarios WHERE id = ? AND contraseña = SHA2(?, 512);`,
 			[idUsuario, oldPassword]
 		);
 
@@ -43,7 +45,7 @@ const editUsuarioPass = async (req, res, next) => {
 
 		// Guardamos la nueva contraseña.
 		await connection.query(
-			`UPDATE usuarios SET password = SHA2(?, 512), modifiedAt = ? WHERE id = ?;`,
+			`UPDATE usuarios SET contraseña = SHA2(?, 512), modificadoEn = ? WHERE id = ?;`,
 			[newPassword, formatDate(new Date()), idUsuario]
 		);
 

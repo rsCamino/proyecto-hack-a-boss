@@ -8,7 +8,7 @@ const addNewComment = async (req, res, next) => {
 
 		const { comentario, idImagen } = req.body;
 		const { idUsuario } = req.authEntity;
-		const now = new Date();
+		const now = formatDate(new Date());
 		const [texto] = await connection.query(
 			`
             INSERT INTO usuarios_imagenes ( comentario, idImagen, idUsuario)

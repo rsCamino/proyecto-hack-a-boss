@@ -32,13 +32,16 @@ const deleteFotoEstablecimiento = async (req, res, next) => {
 			throw error;
 		}
 
-		console.log(photo);
 		const uuid = Number(idPhoto);
 
-		// Borramos la foto del servidor.
+		if (!photo[uuid - 1]) {
+			const error = new Error('La foto no existe');
+			error.httpStatus = 404;
+			throw error;
+		}
+
 		await deletePhoto(photo[uuid - 1].imagen);
 
-		// Borramos la foto de la base de datos.
 		await connection.query(`DELETE FROM imagenes WHERE imagen = ?;`, [
 			photo[uuid - 1].imagen,
 		]);

@@ -91,6 +91,7 @@ const main = async () => {
             id INT PRIMARY KEY AUTO_INCREMENT,
             likes BOOLEAN,
             comentario TEXT,
+            fechaCreacion DATETIME NOT NULL,
             idUsuario INT NOT NULL,
             idImagen INT NOT NULL,
             deleted BOOLEAN DEFAULT false 

@@ -27,13 +27,18 @@ const deletePhotoUsuario = async (req, res, next) => {
 		);
 
 		if (photo.length < 1) {
+			const error = new Error('Tu perfil no tiene fotos');
+			error.httpStatus = 401;
+			throw error;
+		}
+
+		const uuid = Number(idPhoto);
+
+		if (!photo[uuid - 1]) {
 			const error = new Error('La foto no existe');
 			error.httpStatus = 404;
 			throw error;
 		}
-
-		console.log(photo);
-		const uuid = Number(idPhoto);
 
 		await deletePhoto(photo[uuid - 1].imagen);
 
