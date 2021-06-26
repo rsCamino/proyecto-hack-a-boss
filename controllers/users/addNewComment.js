@@ -1,4 +1,3 @@
-const { id } = require('date-fns/locale');
 const getDB = require('../../ddbb/db');
 const { formatDate } = require('../../helpers');
 

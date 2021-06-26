@@ -15,6 +15,8 @@ app.use(express.json());
 const establecimientoExist = require('./middlewares/establecimientoExist');
 const usuarioExist = require('./middlewares/usuarioExist');
 const authEntity = require('./middlewares/authEntity');
+const photoExist = require('./middlewares/photoExists');
+const comentarioExist = require('./middlewares/comentarioExists');
 
 //* Controladores de establecimientos.
 const {
@@ -47,6 +49,7 @@ const {
 	resetUsuarioPass,
 	addNewComment,
 	deleteComment,
+	likePhoto,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -145,6 +148,7 @@ app.post('/usuarios/:idUsuario/photos', authEntity, addPhotoUsuario);
 //* Borrar fotos.
 app.delete(
 	'/usuarios/:idUsuario/photos/:idPhoto',
+	photoExist,
 	usuarioExist,
 	authEntity,
 	deletePhotoUsuario
@@ -180,8 +184,17 @@ app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
 //*Eliminar un comentario.
 app.delete(
 	'/usuarios/:idUsuario/photos/:idPhoto/comments/:idComentario/delete',
+	comentarioExist,
 	authEntity,
 	deleteComment
+);
+
+//*Dar like a una foto.
+app.put(
+	'/usuarios/:idUsuario/photos/:idImagen/like',
+	photoExist,
+	authEntity,
+	likePhoto
 );
 
 //! Middleware de error.

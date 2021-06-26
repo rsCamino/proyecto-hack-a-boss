@@ -7,7 +7,7 @@ const comentarioExist = async (req, res, next) => {
 
 		const { idComentario } = req.params;
 
-		const [usuario] = await connection.query(
+		const [comentario] = await connection.query(
 			`SELECT id FROM usuarios_imagenes WHERE id = ? AND deleted = 0;`,
 			[idComentario]
 		);

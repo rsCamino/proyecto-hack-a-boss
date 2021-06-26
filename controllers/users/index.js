@@ -11,6 +11,7 @@ const resetUsuarioPass = require('./resetUsuarioPass');
 const deletePhotoUsuario = require('./deletePhotoUsuario');
 const addNewComment = require('./addNewComment');
 const deleteComment = require('./deleteComment');
+const likePhoto = require('./likePhoto');
 
 module.exports = {
 	validateUsuario,
@@ -26,4 +27,5 @@ module.exports = {
 	deletePhotoUsuario,
 	addNewComment,
 	deleteComment,
+	likePhoto,
 };
