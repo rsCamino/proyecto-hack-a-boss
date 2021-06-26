@@ -1,20 +1,20 @@
 const getDB = require('../ddbb/db');
 
-const usuarioExist = async (req, res, next) => {
+const comentarioExist = async (req, res, next) => {
 	let connection;
 	try {
 		connection = await getDB();
 
-		const { idUsuario } = req.params;
+		const { idComentario } = req.params;
 
 		const [usuario] = await connection.query(
-			`SELECT id FROM usuarios WHERE id = ? AND deleted = 0;`,
-			[idUsuario]
+			`SELECT id FROM usuarios_imagenes WHERE id = ? AND deleted = 0;`,
+			[idComentario]
 		);
 
-		if (usuario.length < 1) {
+		if (comentario.length < 1) {
 			const error = new Error(
-				'El usuario que usted ha ingresado no existe.'
+				'El comentario que usted ha ingresado no existe.'
 			);
 			error.httpStatus = 404;
 			throw error;
@@ -27,4 +27,4 @@ const usuarioExist = async (req, res, next) => {
 	}
 };
 
-module.exports = usuarioExist;
+module.exports = comentarioExist;
