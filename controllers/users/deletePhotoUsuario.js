@@ -22,29 +22,24 @@ const deletePhotoUsuario = async (req, res, next) => {
 		}
 
 		const [photo] = await connection.query(
-			`SELECT imagen FROM imagenes WHERE idUsuario = ?;`,
-			[idUsuario]
+			`SELECT id, imagen FROM imagenes WHERE id = ?;`,
+			[idPhoto]
 		);
 
 		if (photo.length < 1) {
-			const error = new Error('Tu perfil no tiene fotos');
-			error.httpStatus = 401;
-			throw error;
-		}
-
-		const uuid = Number(idPhoto);
-
-		if (!photo[uuid - 1]) {
 			const error = new Error('La foto no existe');
 			error.httpStatus = 404;
 			throw error;
 		}
 
-		await deletePhoto(photo[uuid - 1].imagen);
+		await deletePhoto(photo[0].imagen);
 
-		await connection.query(`DELETE FROM imagenes WHERE imagen = ?;`, [
-			photo[uuid - 1].imagen,
-		]);
+		await connection.query(`DELETE FROM imagenes WHERE id = ?;`, [idPhoto]);
+		await connection.query(
+			`UPDATE usuarios_imagenes SET deleted = 1 WHERE idImagen = ?;`[
+				idPhoto
+			]
+		);
 
 		res.send({
 			status: 'Ok',

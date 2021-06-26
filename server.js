@@ -152,7 +152,7 @@ app.delete(
 
 //*Agregar comentario
 app.post(
-	'/usuarios/:idUsuario/photos/:idImagen/comments',
+	'/usuarios/:idUsuario/photos/:idImagen/comment',
 	authEntity,
 	addNewComment
 );
@@ -177,6 +177,7 @@ app.put('/usuarios/password/reset', resetUsuarioPass);
 //* Eliminar un usuario.
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
 
+//*Eliminar un comentario.
 app.delete(
 	'/usuarios/:idUsuario/photos/:idPhoto/comments/:idComentario/delete',
 	authEntity,

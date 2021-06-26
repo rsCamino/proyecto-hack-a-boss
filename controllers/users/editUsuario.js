@@ -65,7 +65,7 @@ const editUsuario = async (req, res, next) => {
 			}
 
 			await connection.query(
-				`UPDATE usuarios SET email = ?, modificadoEn = ? WHERE id = ?`,
+				`UPDATE usuarios SET email = ?, modificadoEn = ? WHERE id = ?;`,
 				[email, formatDate(now), idUsuario]
 			);
 		}
