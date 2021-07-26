@@ -13,7 +13,7 @@ const getUsuario = async (req, res, next) => {
 			[idUsuario]
 		);
 
-		if ((usuario[0].deleted = 0)) {
+		if (usuario[0].deleted === 0) {
 			const usuarioInfo = {
 				name: usuario[0].nombre,
 				nickname: usuario[0].nickname,

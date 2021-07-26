@@ -8,10 +8,16 @@ const resetUsuarioPass = async (req, res, next) => {
 	try {
 		connection = await getDB();
 
-		const { recoverCode, newPassword } = req.body;
+		const { recoverCode, newPassword, repeatPassword } = req.body;
 
-		if (!recoverCode || !newPassword) {
+		if (!repeatPassword || !newPassword) {
 			const error = new Error('Faltan campos');
+			error.httpStatus = 400;
+			throw error;
+		}
+
+		if (newPassword !== repeatPassword) {
+			const error = new Error('Las contaseñas no coinciden');
 			error.httpStatus = 400;
 			throw error;
 		}
