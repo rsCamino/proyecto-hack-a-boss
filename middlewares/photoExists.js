@@ -5,11 +5,11 @@ const photoExist = async (req, res, next) => {
 	try {
 		connection = await getDB();
 
-		const { idImagen } = req.params;
+		const { idPhoto } = req.params;
 
 		const [photo] = await connection.query(
 			`SELECT id FROM imagenes WHERE id = ? AND deleted = 0;`,
-			[idImagen]
+			[idPhoto]
 		);
 
 		if (photo.length < 1) {

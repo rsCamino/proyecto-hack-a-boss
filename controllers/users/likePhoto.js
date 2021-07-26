@@ -6,7 +6,7 @@ const likePhoto = async (req, res, next) => {
 	try {
 		connection = await getDB();
 
-		const { idUsuario, idImagen } = req.params;
+		const { idUsuario, idPhoto } = req.params;
 
 		if (
 			!req.authEntity.idUsuario ||
@@ -19,7 +19,7 @@ const likePhoto = async (req, res, next) => {
 
 		const [photo] = await connection.query(
 			`SELECT id FROM imagenes WHERE id = ?;`,
-			[idImagen]
+			[idPhoto]
 		);
 
 		if (photo.length < 1) {
@@ -30,20 +30,18 @@ const likePhoto = async (req, res, next) => {
 
 		const [dadoLike] = await connection.query(
 			`SELECT id, likes FROM usuarios_imagenes WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL ;`,
-			[idUsuario, idImagen]
+			[idUsuario, idPhoto]
 		);
-
-		console.log(dadoLike);
 
 		if (dadoLike[0] !== undefined && dadoLike[0].likes === 1) {
 			await connection.query(
 				`UPDATE usuarios_imagenes SET likes = 0 WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL;`,
-				[idUsuario, idImagen]
+				[idUsuario, idPhoto]
 			);
 			res.send({
 				status: 'Has dado dislike',
 				data: {
-					idImage: idImagen,
+					idImage: idPhoto,
 					user: idUsuario,
 					like: false,
 				},
@@ -51,12 +49,12 @@ const likePhoto = async (req, res, next) => {
 		} else if (dadoLike[0] !== undefined && dadoLike[0].likes === 0) {
 			await connection.query(
 				`UPDATE usuarios_imagenes SET likes = 1 WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL;`,
-				[idUsuario, idImagen]
+				[idUsuario, idPhoto]
 			);
 			res.send({
 				status: 'Has dado like',
 				data: {
-					idImage: idImagen,
+					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
 				},
@@ -66,12 +64,12 @@ const likePhoto = async (req, res, next) => {
 			const now = formatDate(new Date());
 			await connection.query(
 				`INSERT INTO usuarios_imagenes (likes, idImagen, idUsuario, fechaCreacion) VALUES(?, ?, ?, ?);`,
-				[true, idImagen, idUsuario, now]
+				[true, idPhoto, idUsuario, now]
 			);
 			res.send({
 				status: 'Has dado like por primera vez, Ok',
 				data: {
-					idImage: idImagen,
+					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
 				},

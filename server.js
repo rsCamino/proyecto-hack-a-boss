@@ -195,7 +195,7 @@ app.delete(
 
 //*Dar like a una foto.
 app.put(
-	'/usuarios/:idUsuario/photos/:idImagen/like',
+	'/usuarios/:idUsuario/photos/:idPhoto/like',
 	photoExist,
 	authEntity,
 	likePhoto

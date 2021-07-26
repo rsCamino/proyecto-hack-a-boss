@@ -26,14 +26,22 @@ const deletePhotoUsuario = async (req, res, next) => {
 			[idPhoto]
 		);
 
-		await deletePhoto(photo[0].imagen);
-
-		await connection.query(`DELETE FROM imagenes WHERE id = ?;`, [idPhoto]);
-		await connection.query(
-			`UPDATE usuarios_imagenes SET deleted = 1 WHERE idImagen = ?;`[
-				idPhoto
-			]
+		const [action] = await connection.query(
+			`SELECT idImagen FROM usuarios_imagenes WHERE idImagen = ?`,
+			[idPhoto]
 		);
+
+		if (action.length > 0) {
+			await connection.query(
+				`UPDATE usuarios_imagenes SET deleted = 1 WHERE idImagen = ?;`,
+				[idPhoto]
+			);
+			await deletePhoto(photo[0].imagen);
+
+			await connection.query(`DELETE FROM imagenes WHERE id = ?;`, [
+				idPhoto,
+			]);
+		}
 
 		res.send({
 			status: 'Ok',
