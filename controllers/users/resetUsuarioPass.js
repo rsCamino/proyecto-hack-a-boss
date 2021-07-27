@@ -10,7 +10,7 @@ const resetUsuarioPass = async (req, res, next) => {
 
 		const { recoverCode, newPassword, repeatPassword } = req.body;
 
-		if (!repeatPassword || !newPassword || recoverCode) {
+		if (!repeatPassword || !newPassword || !recoverCode) {
 			const error = new Error('Faltan campos');
 			error.httpStatus = 400;
 			throw error;

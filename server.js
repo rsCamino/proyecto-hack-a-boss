@@ -184,7 +184,7 @@ app.put(
 app.put('/usuarios/password/recover', recoverUsuarioPass);
 
 //*Reset contraseña.
-app.put('/usuarios/password/reset/:recoverCode', resetUsuarioPass);
+app.put('/usuarios/password/reset', resetUsuarioPass);
 
 //* Eliminar un usuario.
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
