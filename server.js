@@ -2,9 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
-const app = express();
+const cors = require('cors');
 
+const app = express();
 const { PORT } = process.env;
+
+app.use(
+	cors({
+		origin: '*',
+		credentials: true,
+	})
+);
 
 //*Middlewares
 
@@ -50,7 +58,6 @@ const {
 	addNewComment,
 	deleteComment,
 	likePhoto,
-	verifyRecoverCode,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -176,10 +183,7 @@ app.put(
 //*Recuperar contraseña.
 app.put('/usuarios/password/recover', recoverUsuarioPass);
 
-//*Verifica el codigo de recuperacion
-app.get('/usuarios/password/reset/verify/:recoverCode', verifyRecoverCode);
-
-//*Reset contraseña. . Esto tiene sentido con la anterior?
+//*Reset contraseña.
 app.put('/usuarios/password/reset/:recoverCode', resetUsuarioPass);
 
 //* Eliminar un usuario.
