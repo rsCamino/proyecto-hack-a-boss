@@ -12,6 +12,7 @@ const deletePhotoUsuario = require('./deletePhotoUsuario');
 const addNewComment = require('./addNewComment');
 const deleteComment = require('./deleteComment');
 const likePhoto = require('./likePhoto');
+const verifyRecoverCode = require('./verifyRecoverCode');
 
 module.exports = {
 	validateUsuario,
@@ -28,4 +29,5 @@ module.exports = {
 	addNewComment,
 	deleteComment,
 	likePhoto,
+	verifyRecoverCode,
 };

@@ -50,6 +50,7 @@ const {
 	addNewComment,
 	deleteComment,
 	likePhoto,
+	verifyRecoverCode,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -175,8 +176,11 @@ app.put(
 //*Recuperar contraseña.
 app.put('/usuarios/password/recover', recoverUsuarioPass);
 
+//*Verifica el codigo de recuperacion
+app.get('/usuarios/password/reset/verify/:recoverCode', verifyRecoverCode);
+
 //*Reset contraseña. . Esto tiene sentido con la anterior?
-app.put('/usuarios/password/reset', resetUsuarioPass);
+app.put('/usuarios/password/reset/:recoverCode', resetUsuarioPass);
 
 //* Eliminar un usuario.
 app.delete('/usuarios/:idUsuario', usuarioExist, authEntity, deleteUsuario);
@@ -191,7 +195,7 @@ app.delete(
 
 //*Dar like a una foto.
 app.put(
-	'/usuarios/:idUsuario/photos/:idImagen/like',
+	'/usuarios/:idUsuario/photos/:idPhoto/like',
 	photoExist,
 	authEntity,
 	likePhoto
