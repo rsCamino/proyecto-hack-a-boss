@@ -58,6 +58,8 @@ const {
 	addNewComment,
 	deleteComment,
 	likePhoto,
+	getUsersPhotos,
+	getPhotoComments,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -204,6 +206,12 @@ app.put(
 	authEntity,
 	likePhoto
 );
+
+//*Obtener todas las fotos.
+app.get('/usuarios/photos/all', getUsersPhotos);
+
+//*Obtener los comentarios de una foto.
+app.get('/usuarios/photos/comments', getPhotoComments);
 
 //! Middleware de error.
 

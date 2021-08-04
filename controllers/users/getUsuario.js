@@ -26,9 +26,18 @@ const getUsuario = async (req, res, next) => {
 				usuarioInfo.createdAt = usuario[0].fechaCreacion;
 			}
 
+			const [photoInfo] = await connection.query(
+				`SELECT id, imagen, fechasubida, descripcion, likes
+				FROM imagenes
+				WHERE deleted != 1 AND idUsuario = ?
+				ORDER BY fechasubida `,
+				[idUsuario]
+			);
+
 			res.send({
 				status: 'ok',
-				data: usuarioInfo,
+				informacion: usuarioInfo,
+				Fotos: photoInfo,
 			});
 		} else {
 			res.send({

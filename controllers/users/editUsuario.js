@@ -1,5 +1,11 @@
 const getDB = require('../../ddbb/db');
-const { savePhoto, deletePhoto, formatDate } = require('../../helpers');
+const {
+	savePhoto,
+	deletePhoto,
+	formatDate,
+	validate,
+} = require('../../helpers');
+const { editUsuarioSchema } = require('../../schemas');
 
 const editUsuario = async (req, res, next) => {
 	let connection;
@@ -19,16 +25,7 @@ const editUsuario = async (req, res, next) => {
 			throw error;
 		}
 
-		if (
-			!name &&
-			!nickname &&
-			!email &&
-			!(req.files && req.files.fotoperfil)
-		) {
-			const error = new Error('Faltan campos');
-			error.httpStatus = 400;
-			throw error;
-		}
+		await validate(editUsuarioSchema, req.body);
 
 		const [usuario] = await connection.query(
 			`SELECT email, nombre, fechaCreacion, nickname, fotoperfil FROM usuarios WHERE id = ?`,

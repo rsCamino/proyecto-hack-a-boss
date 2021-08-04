@@ -38,12 +38,24 @@ const likePhoto = async (req, res, next) => {
 				`UPDATE usuarios_imagenes SET likes = 0 WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL;`,
 				[idUsuario, idPhoto]
 			);
+
+			await connection.query(
+				`UPDATE imagenes SET likes = likes - 1 WHERE idUsuario = ? AND id = ?;`,
+				[idUsuario, idPhoto]
+			);
+
+			let [likes] = await connection.query(
+				`SELECT likes FROM imagenes WHERE id = ?;`,
+				[idPhoto]
+			);
+
 			res.send({
 				status: 'Has dado dislike',
 				data: {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: false,
+					totalLikes: likes[0].likes,
 				},
 			});
 		} else if (dadoLike[0] !== undefined && dadoLike[0].likes === 0) {
@@ -51,27 +63,51 @@ const likePhoto = async (req, res, next) => {
 				`UPDATE usuarios_imagenes SET likes = 1 WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL;`,
 				[idUsuario, idPhoto]
 			);
+
+			await connection.query(
+				`UPDATE imagenes SET likes = likes + 1 WHERE idUsuario = ? AND id = ?;`,
+				[idUsuario, idPhoto]
+			);
+
+			[likes] = await connection.query(
+				`SELECT likes FROM imagenes WHERE id = ?;`,
+				[idPhoto]
+			);
+
 			res.send({
 				status: 'Has dado like',
 				data: {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
+					totalLikes: likes[0].likes,
 				},
 			});
 		} else if (!dadoLike[0]) {
-			console.log(dadoLike[0]);
 			const now = formatDate(new Date());
+
 			await connection.query(
 				`INSERT INTO usuarios_imagenes (likes, idImagen, idUsuario, fechaCreacion) VALUES(?, ?, ?, ?);`,
 				[true, idPhoto, idUsuario, now]
 			);
+
+			await connection.query(
+				`UPDATE imagenes SET likes = likes + 1 WHERE idUsuario = ? AND id = ?;`,
+				[idUsuario, idPhoto]
+			);
+
+			[likes] = await connection.query(
+				`SELECT likes FROM imagenes WHERE id = ?;`,
+				[idPhoto]
+			);
+
 			res.send({
 				status: 'Has dado like por primera vez, Ok',
 				data: {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
+					totalLikes: likes[0].likes,
 				},
 			});
 		}

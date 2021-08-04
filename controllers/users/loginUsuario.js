@@ -26,7 +26,6 @@ const loginUsuario = async (req, res, next) => {
 			throw error;
 		}
 
-		console.log(usuario[0].activo);
 		if (!usuario[0].activo) {
 			const error = new Error('Usuario pendiente de validar');
 			error.httpStatus = 401;
@@ -40,11 +39,12 @@ const loginUsuario = async (req, res, next) => {
 		const token = jwt.sign(tokenInfo, process.env.SECRET, {
 			expiresIn: '60d',
 		});
-
+		console.log(token);
 		res.send({
 			status: 'ok',
 			data: {
 				token,
+				idUsuario: usuario[0].id,
 			},
 		});
 	} catch (error) {

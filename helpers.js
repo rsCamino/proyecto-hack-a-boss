@@ -66,10 +66,20 @@ async function deletePhoto(photoName) {
 	await unlink(photoPath);
 }
 
+async function validate(schema, data) {
+	try {
+		await schema.validateAsync(data);
+	} catch (error) {
+		error.httpStatus = 400;
+		throw error;
+	}
+}
+
 module.exports = {
 	generateRandomString,
 	formatDate,
 	deletePhoto,
 	sendMail,
 	savePhoto,
+	validate,
 };

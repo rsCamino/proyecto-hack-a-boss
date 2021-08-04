@@ -62,7 +62,7 @@ const main = async () => {
                 imagen VARCHAR(50) UNIQUE,
                 fechasubida DATETIME NOT NULL,
                 descripcion TEXT,
-                likes int unsigned,
+                likes INT DEFAULT 0,
                 idEstablecimiento INT,
                 idUsuario INT,
                 deleted BOOLEAN DEFAULT false 

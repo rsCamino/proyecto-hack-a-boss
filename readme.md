@@ -28,12 +28,13 @@
 
 -   POST - [/usuarios] - Crea un usuario pendiente de activar. ✅
 -   GET - [/usuarios/validate/:registrationCode] - Valida un usuario recien registrado. ✅
+-   GET - [usuarios/photos] - Obtiene las fotos de los usuarios.
 -   GET - [/usuarios/:idUsuario] - Retorna informacion de un usuario concreto. ✅
 -   POST - [/usuarios/login] - Logea a un usuario retornando un token. ✅
 -   POST - [/usuarios/:idUsuario/photos] - Agrega una foto a un perfil de usuario. ✅
 -   POST - [/usuarios/:idUsuario/photos/:idPhoto/comments] - Agrega un comentario a una foto. ✅
 -   GET - [/usuarios/:idUsuario/photos/:idPhoto] - Retorna la foto y los comentarios asociados a la foto.
--   DELETE - [/usuarios/idEstablecimiento/photos/:idPhoto] - Elimina una foto.✅
+-   DELETE - [/usuarios/:idUsuario/photos/:idPhoto] - Elimina una foto.✅
 -   DELETE - [/usuarios/:idUsuario/photos/:idPhoto/comments/:idComentario/delete] - Eliminar un comentario ✅
 -   PUT - [/usuarios/:idUsuario] - Edita (nombre, email y/o avatar) un usuario. ✅
 -   PUT - [/usuarios/:idUsuario/password] - Edita la contraseña de un usuario. ✅
