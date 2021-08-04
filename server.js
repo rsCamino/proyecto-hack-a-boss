@@ -3,9 +3,10 @@ const express = require('express');
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const { PORT } = process.env;
+const { PORT, UPLOADS_DIRECTORY } = process.env;
 
 app.use(
 	cors({
@@ -19,6 +20,7 @@ app.use(
 app.use(morgan('dev'));
 app.use(fileUpload());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'static')));
 
 const establecimientoExist = require('./middlewares/establecimientoExist');
 const usuarioExist = require('./middlewares/usuarioExist');

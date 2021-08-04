@@ -1,11 +1,11 @@
 const getDB = require('../../ddbb/db');
+const { PUBLIC_HOST } = process.env;
 
 const getUsersPhotos = async (req, res, next) => {
 	let connection;
 
 	try {
 		connection = await getDB();
-		console.log('ENTRE!!!');
 
 		const { order, direction } = req.query;
 
@@ -24,6 +24,10 @@ const getUsersPhotos = async (req, res, next) => {
       WHERE deleted != 1 
       ORDER BY ${orderBy} ${orderDirection};`
 		);
+
+		for (let i = 0; i < photoInfo.length; i++) {
+			photoInfo[i].url = `${PUBLIC_HOST}/uploads/${photoInfo[i].imagen}`;
+		}
 
 		res.send({
 			status: 'Ok',

@@ -1,4 +1,5 @@
 const getDB = require('../../ddbb/db');
+const { PUBLIC_HOST } = process.env;
 
 const getUsuario = async (req, res, next) => {
 	let connection;
@@ -17,7 +18,7 @@ const getUsuario = async (req, res, next) => {
 			const usuarioInfo = {
 				name: usuario[0].nombre,
 				nickname: usuario[0].nickname,
-				fotoperfil: usuario[0].fotoperfil,
+				fotoperfil: `${PUBLIC_HOST}/uploads/${usuario[0].fotoperfil}`,
 			};
 
 			if (req.authEntity.idUsuario === Number(idUsuario)) {
@@ -33,6 +34,12 @@ const getUsuario = async (req, res, next) => {
 				ORDER BY fechasubida `,
 				[idUsuario]
 			);
+
+			for (let i = 0; i < photoInfo.length; i++) {
+				photoInfo[
+					i
+				].url = `${PUBLIC_HOST}/uploads/${photoInfo[i].imagen}`;
+			}
 
 			res.send({
 				status: 'ok',
