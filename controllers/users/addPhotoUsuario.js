@@ -31,13 +31,13 @@ const addPhotoUsuario = async (req, res, next) => {
 				[photoName, description, idUsuario, now]
 			);
 		}
-		const id = await connection.query(
+		const [id] = await connection.query(
 			`SELECT id FROM imagenes WHERE imagen = ?;`, [photoName]);
 		
 		res.send({
 			status: 'ok',
 			data: {
-				id,
+				id: id[0].id,
 				foto: photoName,
 				descripcion: description,
 				fechaDeSubida: now,
