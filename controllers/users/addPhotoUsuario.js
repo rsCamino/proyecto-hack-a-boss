@@ -30,10 +30,10 @@ const addPhotoUsuario = async (req, res, next) => {
 				`INSERT INTO imagenes (imagen, descripcion, idUsuario, fechasubida) VALUES (?, ?, ?, ?);`,
 				[photoName, description, idUsuario, now]
 			);
-			const id = await connection.query(
-			`SELECT id FROM imagenes WHERE imagen = ?;`, [photoName]);
 		}
-
+		const id = await connection.query(
+			`SELECT id FROM imagenes WHERE imagen = ?;`, [photoName]);
+		
 		res.send({
 			status: 'ok',
 			data: {
