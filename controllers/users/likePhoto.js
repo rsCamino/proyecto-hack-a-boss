@@ -32,6 +32,8 @@ const likePhoto = async (req, res, next) => {
 			`SELECT id, likes FROM usuarios_imagenes WHERE idUsuario = ? AND idImagen = ? AND comentario IS NULL ;`,
 			[idUsuario, idPhoto]
 		);
+		
+		let likes;
 
 		if (dadoLike[0] !== undefined && dadoLike[0].likes === 1) {
 			await connection.query(
@@ -44,10 +46,7 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			let [likes] = await connection.query(
-				`SELECT likes FROM imagenes WHERE id = ?;`,
-				[idPhoto]
-			);
+			await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
 
 			res.send({
 				status: 'Has dado dislike',
@@ -69,10 +68,7 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			[likes] = await connection.query(
-				`SELECT likes FROM imagenes WHERE id = ?;`,
-				[idPhoto]
-			);
+			[likes] = await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
 
 			res.send({
 				status: 'Has dado like',
@@ -96,10 +92,7 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			[likes] = await connection.query(
-				`SELECT likes FROM imagenes WHERE id = ?;`,
-				[idPhoto]
-			);
+			[likes] = await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
 
 			res.send({
 				status: 'Has dado like por primera vez, Ok',
@@ -110,6 +103,7 @@ const likePhoto = async (req, res, next) => {
 					totalLikes: likes[0].likes,
 				},
 			});
+		
 		}
 	} catch (error) {
 		next(error);
