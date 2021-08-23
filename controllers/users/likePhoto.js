@@ -33,7 +33,6 @@ const likePhoto = async (req, res, next) => {
 			[idUsuario, idPhoto]
 		);
 		
-		let likes;
 
 		if (dadoLike[0] !== undefined && dadoLike[0].likes === 1) {
 			await connection.query(
@@ -46,7 +45,8 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
+			[likes] = await connection.query(`SELECT sum(likes = 1) as totalLikes FROM usuarios_imagenes WHERE idImagen = ?;`, [idPhoto]);
+
 
 			res.send({
 				status: 'Has dado dislike',
@@ -54,7 +54,7 @@ const likePhoto = async (req, res, next) => {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: false,
-					totalLikes: likes[0].likes,
+					totalLikes: likes[0].totalLikes,
 				},
 			});
 		} else if (dadoLike[0] !== undefined && dadoLike[0].likes === 0) {
@@ -68,7 +68,7 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			[likes] = await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
+			[likes] = await connection.query(`SELECT sum(likes = 1) as totalLikes FROM usuarios_imagenes WHERE idImagen = ?;`, [idPhoto]);
 
 			res.send({
 				status: 'Has dado like',
@@ -76,7 +76,7 @@ const likePhoto = async (req, res, next) => {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
-					totalLikes: likes[0].likes,
+					totalLikes: likes[0].totalLikes,
 				},
 			});
 		} else if (!dadoLike[0]) {
@@ -92,7 +92,8 @@ const likePhoto = async (req, res, next) => {
 				[idUsuario, idPhoto]
 			);
 
-			[likes] = await connection.query(`SELECT sum(likes = 1) FROM imagenes WHERE id = ?;`, [idPhoto]);
+			[likes] = await connection.query(`SELECT sum(likes = 1) as totalLikes FROM usuarios_imagenes WHERE idImagen = ?;`, [idPhoto]);
+
 
 			res.send({
 				status: 'Has dado like por primera vez, Ok',
@@ -100,7 +101,7 @@ const likePhoto = async (req, res, next) => {
 					idImage: idPhoto,
 					user: idUsuario,
 					like: true,
-					totalLikes: likes[0].likes,
+					totalLikes: likes[0].totalLikes,
 				},
 			});
 		
