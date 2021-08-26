@@ -40,9 +40,5 @@ const editUsuarioSchema = Joi.object()
 				}
 			}),
 	})
-	.min(1)
-	.error((errors) => {
-		return new Error('Se requiere al menos un campo para editar.');
-	});
 
 module.exports = editUsuarioSchema;
