@@ -217,7 +217,7 @@ app.get('/usuarios/photos/all', getUsersPhotos);
 app.get('/usuarios/photos/comments', getPhotoComments);
 
 //* Obtener todos los usuarios.
-app.get('usuarios/all', getAllUsers);
+app.get('/usuarios/all', getAllUsers);
 
 //! Middleware de error.
 
