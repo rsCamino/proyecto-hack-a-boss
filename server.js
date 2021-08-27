@@ -62,6 +62,7 @@ const {
 	likePhoto,
 	getUsersPhotos,
 	getPhotoComments,
+	getAllUsers,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -214,6 +215,9 @@ app.get('/usuarios/photos/all', getUsersPhotos);
 
 //*Obtener los comentarios de una foto.
 app.get('/usuarios/photos/comments', getPhotoComments);
+
+//* Obtener todos los usuarios.
+app.get('usuarios/all', getAllUsers);
 
 //! Middleware de error.
 
