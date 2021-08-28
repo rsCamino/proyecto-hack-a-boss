@@ -20,17 +20,16 @@ const getAllUsers = async (req, res, next) => {
     nickname: usuario[i].nickname,
     fotoperfil: `${PUBLIC_HOST}/uploads/${usuario[i].fotoperfil}`, })
     };
-    }
-			res.send({
-				status: 'ok',
-				informacion: usersInfo,
-			});
-		} else {
-			res.send({
-				status: 'Deleted',
-				data: 'No hay usuarios en la base de datos',
-			});
-		}
+    res.send({
+	status: 'ok',
+	informacion: usersInfo,
+	});
+    } else if (usuario.length === 0) {
+	res.send({
+	status: 'Deleted',
+	data: 'No hay usuarios en la base de datos',
+	});
+	}
 	} catch (error) {
 		next(error);
 	} finally {
