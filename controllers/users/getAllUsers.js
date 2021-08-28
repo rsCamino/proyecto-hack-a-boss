@@ -8,13 +8,13 @@ const getAllUsers = async (req, res, next) => {
 		connection = await getDB();
 
 		const [usuario] = await connection.query(
-			`SELECT id, nombre, nickname, fotoperfil FROM usuarios;`,
+			`SELECT * FROM usuarios;`,
 			[]
 		);
     
     let usersInfo = [];
     for (let i = 0; i < usuario.length; i++) {
-    if (usuario[i].deleted !== 0) {
+    if (usuario[i].deleted !== 1) {
     usersInfo.push({
     name: usuario[i].nombre,
     nickname: usuario[i].nickname,
