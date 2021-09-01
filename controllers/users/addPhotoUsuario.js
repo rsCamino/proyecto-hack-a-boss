@@ -27,21 +27,19 @@ const addPhotoUsuario = async (req, res, next) => {
 			photoName = await savePhoto(req.files.photo);
 
 			await connection.query(
-				`INSERT INTO imagenes (imagen, descripcion, idUsuario, fechasubida) VALUES (?, ?, ?, ?);`,
-				[photoName, description, idUsuario, now]
+				`UPDATE usuarios SET fotoperfil = ? WHERE id = ?;`,
+				[photoName, idUsuario]
 			);
 		}
-		const [id] = await connection.query(
-			`SELECT id FROM imagenes WHERE imagen = ?;`, [photoName]);
-		
+
+		const [user] = await connection.query(
+			'SELECT id, nombre, fotoperfil, email, fechaCreacion FROM usuarios WHERE id = ?',
+			[idUsuario]
+		);
+
 		res.send({
 			status: 'ok',
-			data: {
-				id: id[0].id,
-				foto: photoName,
-				descripcion: description,
-				fechaDeSubida: now,
-			},
+			data: user[0],
 		});
 	} catch (error) {
 		next(error);

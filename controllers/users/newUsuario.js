@@ -32,7 +32,7 @@ const newUsuario = async (req, res, next) => {
 
 		const emailBody = `
             Te acabas de registrar en Ruta do Camiño.
-            Pulsa en este link para verificar tu cuenta: ${process.env.PUBLIC_HOST}/usuarios/validate/${registrationCode}
+            Pulsa en este link para verificar tu cuenta: http://localhost:3000/usuarios/validate/${registrationCode}
         `;
 
 		// Enviamos el mensaje.

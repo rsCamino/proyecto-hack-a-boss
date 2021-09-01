@@ -51,6 +51,7 @@ const {
 	getUsuario,
 	loginUsuario,
 	addPhotoUsuario,
+	uploadPhotoUsuario,
 	deletePhotoUsuario,
 	editUsuario,
 	deleteUsuario,
@@ -155,8 +156,11 @@ app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
 //*Loguearse como usuario.
 app.post('/usuarios/login', loginUsuario);
 
-//* Subir imagen.
+//* Subir avatar.
 app.post('/usuarios/:idUsuario/photos', authEntity, addPhotoUsuario);
+
+//* Subir imagen.
+app.post('/usuarios/:idUsuario/upload', authEntity, uploadPhotoUsuario);
 
 //* Borrar fotos.
 app.delete(
@@ -217,7 +221,7 @@ app.get('/usuarios/photos/all', getUsersPhotos);
 app.get('/usuarios/photos/comments', getPhotoComments);
 
 //* Obtener todos los usuarios.
-app.get('/usuarios/all/prueba', getAllUsers);
+app.get('/usuarios/all/users', getAllUsers);
 
 //! Middleware de error.
 

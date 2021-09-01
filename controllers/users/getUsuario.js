@@ -18,7 +18,7 @@ const getUsuario = async (req, res, next) => {
 			const usuarioInfo = {
 				name: usuario[0].nombre,
 				nickname: usuario[0].nickname,
-				fotoperfil: `${PUBLIC_HOST}/uploads/${usuario[0].fotoperfil}`,
+				fotoperfil: usuario[0].fotoperfil,
 			};
 
 			if (req.authEntity.idUsuario === Number(idUsuario)) {

@@ -36,6 +36,35 @@ async function savePhoto(image) {
 	return savedImageName;
 }
 
+async function saveAndCropPhoto({ image, x, y, width, height }) {
+	await ensureDir(uploadsDir);
+	const IMAGE_MAX_WIDTH = 1000;
+	const sharpImage = sharp(image.data);
+	const imageInfo = await sharpImage.metadata();
+
+	const originalPhotoWidth = imageInfo.width;
+	const originalPhotoHeight = imageInfo.height;
+
+	sharpImage.extract({
+		left: parseInt((originalPhotoWidth * x) / 100),
+		top: parseInt((originalPhotoHeight * y) / 100),
+		width: parseInt((originalPhotoWidth * width) / 100),
+		height: parseInt((originalPhotoHeight * height) / 100),
+	});
+
+	const croppedImageInfo = await sharpImage.metadata();
+
+	if (croppedImageInfo.width > IMAGE_MAX_WIDTH) {
+		sharpImage.resize(IMAGE_MAX_WIDTH);
+	}
+
+	const savedImageName = `${uuid.v4()}.jpg`;
+	const imagePath = path.join(uploadsDir, savedImageName);
+
+	await sharpImage.toFile(imagePath);
+	return savedImageName;
+}
+
 async function deletePhoto(photoName) {
 	const photoPath = path.join(uploadsDir, photoName);
 	await unlink(photoPath);
@@ -61,11 +90,6 @@ async function sendMail({ to, subject, body }) {
 	}
 }
 
-async function deletePhoto(photoName) {
-	const photoPath = path.join(uploadsDir, photoName);
-	await unlink(photoPath);
-}
-
 async function validate(schema, data) {
 	try {
 		await schema.validateAsync(data);
@@ -81,5 +105,6 @@ module.exports = {
 	deletePhoto,
 	sendMail,
 	savePhoto,
+	saveAndCropPhoto,
 	validate,
 };

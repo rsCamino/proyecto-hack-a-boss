@@ -15,7 +15,7 @@ const editUsuario = async (req, res, next) => {
 
 		const { idUsuario } = req.params;
 
-		const { name, nickname, email, fotoperfil } = req.body;
+		const { name, nickname, email } = req.body;
 
 		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(
