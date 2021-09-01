@@ -28,17 +28,19 @@ const getPhotoComments = async (req, res, next) => {
 
 		if (idImagen) {
 			[photoComments] = await connection.query(
-				`SELECT id, idImagen, fechaCreacion, comentario, idUsuario
+				`SELECT id, idImagen, fechaCreacion, comentario,likes, idUsuario
         FROM usuarios_imagenes
-        WHERE deleted != 1 AND comentario IS NOT NULL AND idImagen = ?
+        WHERE deleted != 1  AND idImagen = ?
         ORDER BY ${orderBy} ${orderDirection};`,
 				[idImagen]
 			);
+
+			//ELiminamos comentario IS NOT NULL de abajo y arriba lineas 43 y 33
 		} else {
 			[photoComments] = await connection.query(
-				`SELECT id, idImagen, fechaCreacion, comentario, idUsuario
+				`SELECT id, idImagen, fechaCreacion, comentario, likes, idUsuario
         FROM usuarios_imagenes
-        WHERE deleted != 1 AND comentario IS NOT NULL
+        WHERE deleted != 1 
         ORDER BY ${orderBy} ${orderDirection};`
 			);
 		}

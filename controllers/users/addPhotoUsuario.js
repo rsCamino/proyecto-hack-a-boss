@@ -21,8 +21,6 @@ const addPhotoUsuario = async (req, res, next) => {
 
 		let photoName;
 
-		const now = formatDate(new Date());
-
 		if (req.files && req.files.photo) {
 			photoName = await savePhoto(req.files.photo);
 

@@ -6,7 +6,7 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const { PORT, UPLOADS_DIRECTORY } = process.env;
+const { PORT } = process.env;
 
 app.use(
 	cors({
@@ -225,7 +225,7 @@ app.get('/usuarios/all/users', getAllUsers);
 
 //! Middleware de error.
 
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
 	console.error(error);
 	res.status(error.httpStatus || 500).send({
 		status: 'Error',
