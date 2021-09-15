@@ -23,7 +23,12 @@ const editUsuarioPass = async (req, res, next) => {
 
 		// Comprobamos que la contraseña tenga al menos 8 caracteres,
 		// de lo contrario...
-		if (newPassword.length < 8) {
+		// if (!newPassword) {
+		// 	const error = new Error('Debes escribir una nueva contraseña');
+		// 	error.httpStatus = 400;
+		// 	throw error;
+		// } else {
+		if (newPassword.length < 6) {
 			const error = new Error(
 				'La nueva contraseña debe tener un mínimo de 8 caracteres'
 			);

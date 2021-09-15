@@ -15,7 +15,8 @@ const deleteComment = require('./deleteComment');
 const likePhoto = require('./likePhoto');
 const getUsersPhotos = require('./getUsersPhotos');
 const getPhotoComments = require('./getPhotoComments');
-const getAllUsers = require('./getAllUsers.js');
+const getAllUsers = require('./getAllUsers');
+const getAvatarUsers = require('./getAvatarUsers');
 
 module.exports = {
 	validateUsuario,
@@ -36,4 +37,5 @@ module.exports = {
 	getUsersPhotos,
 	getPhotoComments,
 	getAllUsers,
+	getAvatarUsers,
 };

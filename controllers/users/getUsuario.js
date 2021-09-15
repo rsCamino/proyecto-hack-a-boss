@@ -21,7 +21,7 @@ const getUsuario = async (req, res, next) => {
 				fotoperfil: usuario[0].fotoperfil,
 			};
 
-			if (req.authEntity.idUsuario === Number(idUsuario)) {
+			if (req.idUsuario === Number(idUsuario)) {
 				usuarioInfo.email = usuario[0].email;
 				usuarioInfo.modifiedAt = usuario[0].modificadoEn;
 				usuarioInfo.createdAt = usuario[0].fechaCreacion;

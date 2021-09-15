@@ -1,6 +1,6 @@
 const getDB = require('../../ddbb/db');
 
-const { savePhoto, formatDate } = require('../../helpers');
+const { savePhoto } = require('../../helpers');
 
 const addPhotoUsuario = async (req, res, next) => {
 	let connection;
@@ -9,7 +9,7 @@ const addPhotoUsuario = async (req, res, next) => {
 		connection = await getDB();
 
 		const { idUsuario } = req.params;
-		const { description } = req.body;
+
 		console.log(idUsuario);
 		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(

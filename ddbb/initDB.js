@@ -22,8 +22,8 @@ const main = async () => {
         CREATE TABLE usuarios(
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(70) NOT NULL,
-                nickname VARCHAR(70) NOT NULL UNIQUE,
-                fotoperfil VARCHAR(50), 
+                nickname VARCHAR(70) NOT NULL,
+                fotoperfil VARCHAR(150), 
                 email VARCHAR(50) UNIQUE,
                 fechaCreacion DATETIME NOT NULL,
                 modificadoEn DATETIME,
@@ -112,27 +112,29 @@ const main = async () => {
         "admin");
         `);
 		console.log('Admin insertado');
-		const usuarios = 10;
-		for (let i = 0; i < usuarios; i++) {
-			const now = formatDate(new Date());
-			const email = faker.internet.email();
-			const contraseña = faker.internet.password();
-			const nombre = faker.name.findName();
-			const nickname = faker.name.firstName();
-			const fechaCreacion = now;
-			await connection.query(`
-            INSERT INTO usuarios(
-                 email, contraseña, nombre, nickname, fechaCreacion, activo
-            )
-            VALUES (
-                "${email}", 
-                SHA2("${contraseña}", 512), 
-                "${nombre}",
-                "${nickname}", 
-                "${fechaCreacion}", 
-                true
-            );`);
-		}
+		// const usuarios = 10;
+		// for (let i = 0; i < usuarios; i++) {
+		// 	const now = formatDate(new Date());
+		// 	const email = faker.internet.email();
+		// 	const contraseña = faker.internet.password();
+		// 	const nombre = faker.name.findName();
+		// 	const nickname = faker.name.firstName();
+
+		// 	const fechaCreacion = now;
+		// 	await connection.query(`
+		//     INSERT INTO usuarios(
+		//          email, contraseña, nombre, nickname, fechaCreacion,  activo
+		//     )
+		//     VALUES (
+		//         "${email}",
+		//         SHA2("${contraseña}", 512),
+		//         "${nombre}",
+		//         "${nickname}",
+		//         "${fechaCreacion}",
+
+		//         true
+		//     );`);
+		// }
 		console.log('usuarios insertados');
 
 		const establecimientos = 5;

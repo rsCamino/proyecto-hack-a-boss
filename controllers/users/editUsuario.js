@@ -15,7 +15,7 @@ const editUsuario = async (req, res, next) => {
 
 		const { idUsuario } = req.params;
 
-		const { name, nickname, email } = req.body;
+		const { nombre, nickname, email } = req.body;
 
 		if (req.authEntity.idUsuario !== Number(idUsuario)) {
 			const error = new Error(
@@ -86,10 +86,10 @@ const editUsuario = async (req, res, next) => {
 			);
 		}
 
-		if (name && usuario[0].name !== name) {
+		if (nombre && usuario[0].nombre !== nombre) {
 			await connection.query(
-				`UPDATE usuarios SET name = ?, modificadoEn = ? WHERE id = ?`,
-				[name, formatDate(now), idUsuario]
+				`UPDATE usuarios SET nombre = ?, modificadoEn = ? WHERE id = ?`,
+				[nombre, formatDate(now), idUsuario]
 			);
 		}
 

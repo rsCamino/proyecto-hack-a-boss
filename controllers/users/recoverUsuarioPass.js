@@ -26,12 +26,12 @@ const recoverUsuarioPass = async (req, res, next) => {
 			throw error;
 		}
 
-		const recoverCode = generateRandomString(20);
+		const recoverCode = generateRandomString(8);
 
 		const emailBody = `
             Se solicitó un cambio de contraseña para el usuario registrado con este email en la app Ruta do Camiño.
 
-            Por favor usa este codigo para recuperar tu constraseña:${recoverCode}
+            Por favor copia y pega este codigo para recuperar tu constraseña:${recoverCode}
 
             Si no has sido tu por favor, ignora este email.
 

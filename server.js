@@ -64,6 +64,7 @@ const {
 	getUsersPhotos,
 	getPhotoComments,
 	getAllUsers,
+	getAvatarUsers,
 } = require('./controllers/users');
 
 //TODO Endpoints establecimientos.
@@ -151,13 +152,17 @@ app.post('/usuarios', newUsuario);
 app.get('/usuarios/validate/:registrationCode', validateUsuario);
 
 //* Obtener un Usuario.
-app.get('/usuarios/:idUsuario', usuarioExist, authEntity, getUsuario);
+app.get('/usuarios/:idUsuario', usuarioExist, getUsuario);
+// authEntity,
 
 //*Loguearse como usuario.
 app.post('/usuarios/login', loginUsuario);
 
 //* Subir avatar.
 app.post('/usuarios/:idUsuario/photos', authEntity, addPhotoUsuario);
+
+//*Get Avatar.
+app.get('/usuarios/avatar/users', usuarioExist, getAvatarUsers);
 
 //* Subir imagen.
 app.post('/usuarios/:idUsuario/upload', authEntity, uploadPhotoUsuario);
@@ -217,6 +222,9 @@ app.put(
 //*Obtener todas las fotos.
 app.get('/usuarios/photos/all', getUsersPhotos);
 
+//*Obtener avatares.
+app.get('/usuarios/avatar/users', getAvatarUsers);
+
 //*Obtener los comentarios de una foto.
 app.get('/usuarios/photos/comments', getPhotoComments);
 
@@ -225,7 +233,7 @@ app.get('/usuarios/all/users', getAllUsers);
 
 //! Middleware de error.
 
-app.use((error, req, res) => {
+app.use((error, req, res, next) => {
 	console.error(error);
 	res.status(error.httpStatus || 500).send({
 		status: 'Error',
